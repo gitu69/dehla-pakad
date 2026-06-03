@@ -72,6 +72,9 @@ from './game/matchComplete';
 import Message
 from './components/Message';
 
+import ScoreBoard
+from './components/ScoreBoard';
+
 import UndoButton
 from './components/UndoButton';
 
@@ -1194,6 +1197,18 @@ capturedB={capturedB}
 
     message={message}
 
+/>
+
+<Message
+    message={message}
+/>
+
+<ScoreBoard
+    teamA={teamA}
+    teamB={teamB}
+    matchA={matchA}
+    matchB={matchB}
+    currentRound={currentRound}
 />
 
 <UndoButton
