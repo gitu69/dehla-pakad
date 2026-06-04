@@ -1139,111 +1139,91 @@ setMatchWinner(
 
         <div
 className="
+relative
 min-h-screen
-bg-gradient-to-b
-from-slate-900
-via-slate-800
-to-slate-900
+bg-[radial-gradient(circle_at_center,_#102a66,_#081830,_#030712)]
 text-white
 p-4
 "
 >
 
-            <h1
-            className="
-            text-3xl
-            font-bold
-            text-center
-            mb-4
-            "
-            >
+            
 
-                Dehla Pakad
+          
 
-            </h1>
-
-           <GameInfo
-
-    currentPlayer={currentPlayer}
-
-    trumpSuit={trumpSuit}
-
-    tableDahlas={tableDahlas}
-
-    tableDahlaSuits={tableDahlaSuits}
-
-    teamA={teamA}
-
-    teamB={teamB}
-
-    currentRound={currentRound}
-
-    matchA={matchA}
-
-    matchB={matchB}
-
-    matchWinner={matchWinner}
-
-    matchOver={matchOver}
-
-    resetMatch={resetMatch}
-
-    capturedA={capturedA}
-capturedB={capturedB}
-
-/>
-
-<Message
-
-    message={message}
-
-/>
 
 <Message
     message={message}
 />
 
+<div
+className="
+absolute
+top-2
+left-2
+sm:top-4
+sm:left-4
+z-20
+"
+>
 <ScoreBoard
-    teamA={teamA}
-    teamB={teamB}
-    matchA={matchA}
-    matchB={matchB}
-    currentRound={currentRound}
+  teamA={teamA}
+  teamB={teamB}
+  matchA={matchA}
+  matchB={matchB}
+  currentRound={currentRound}
+  trumpSuit={trumpSuit}
+  capturedA={capturedA}
+  capturedB={capturedB}
+  tableDahlaSuits={tableDahlaSuits}
 />
+</div>
+
+<div
+className="
+absolute
+top-2
+right-2
+sm:top-4
+sm:right-4
+z-20
+flex
+gap-1
+sm:gap-2
+"
+>
 
 <UndoButton
     undoMove={undoMove}
 />
 
 <ShowCardsButton
-
-    showAllCards={
-        showAllCards
-    }
-
-    setShowAllCards={
-        setShowAllCards
-    }
-
+    showAllCards={showAllCards}
+    setShowAllCards={setShowAllCards}
 />
 
 <AISwitchButton
-
-    aiEnabled={
-        aiEnabled
-    }
-
-    setAiEnabled={
-        setAiEnabled
-    }
-
+    aiEnabled={aiEnabled}
+    setAiEnabled={setAiEnabled}
 />
 
+</div>
 
 
-         {/* PLAYER 2 */}
 
-<div className="mb-2">
+      {/* PLAYER 2 */}
+
+<div
+className="
+absolute
+top-[10px]
+sm:top-[20px]
+md:top-[30px]
+left-1/2
+-translate-x-1/2
+z-20
+"
+>
 
 {
 
@@ -1272,6 +1252,7 @@ showAllCards
 <PlayerAvatar
 
     playerName="Player 2"
+    position="bottom"
 
     cardCount={
         players[2].length
@@ -1295,17 +1276,37 @@ showAllCards
 
            <div
 className="
+absolute
+top-[49%]
+left-1/2
+
+-translate-x-1/2
+-translate-y-1/2
+
 flex
 justify-center
 items-center
-gap-8
-my-2
+
+w-full
 "
 >
 
-                {/* PLAYER 4 */}
+               {/* PLAYER 4 */}
 
-              {
+<div
+className="
+absolute
+left-[4vw]
+sm:left-[5vw]
+md:left-[6vw]
+
+top-[45%]
+-translate-y-1/2
+z-20
+"
+>
+
+{
 
 showAllCards
 
@@ -1334,7 +1335,7 @@ showAllCards
 <PlayerAvatar
 
     playerName="Player 4"
-
+    position="right"
     cardCount={
         players[3].length
     }
@@ -1349,17 +1350,61 @@ showAllCards
 
 }
 
-                {/* TABLE */}
+</div>
 
-                <Table
+               {/* TABLE */}
 
+<div
+className="
+absolute
+left-1/2
+top-1/2
+
+-translate-x-1/2
+-translate-y-1/2
+
+w-[88vw]
+max-w-[600px]
+
+h-[38vh]
+max-h-[320px]
+
+rounded-3xl
+border
+border-slate-500
+
+bg-slate-800/20
+backdrop-blur-sm
+
+flex
+items-center
+justify-center
+
+shadow-xl
+"
+>
+
+<Table
     centerCards={centerCards}
-
 />
 
-                {/* PLAYER 3 */}
+</div>
+               {/* PLAYER 3 */}
 
-              {
+<div
+className="
+absolute
+right-[4vw]
+sm:right-[5vw]
+md:right-[6vw]
+
+top-[45%]
+-translate-y-1/2
+z-20
+"
+>
+
+{
 
 showAllCards
 
@@ -1388,6 +1433,7 @@ showAllCards
 <PlayerAvatar
 
     playerName="Player 3"
+    position="left"
 
     cardCount={
         players[1].length
@@ -1402,17 +1448,29 @@ showAllCards
 )
 
 }
+
+</div>
             </div>
 
-        {/* PLAYER 1 */}
+       {/* PLAYER 1 */}
 
 <div
 className="
-mt-4
+fixed
+bottom-[50px]
+sm:bottom-[60px]
+md:bottom-[70px]
+
+left-1/2
+-translate-x-1/2
+
 flex
 flex-col
 items-center
-gap-2
+
+z-50
+
+w-full
 "
 >
 
@@ -1431,6 +1489,7 @@ gap-2
     showCardFan={false}
 
 />
+
 
     <PlayerHand
 

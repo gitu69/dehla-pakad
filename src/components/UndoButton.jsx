@@ -6,31 +6,39 @@ export default function UndoButton({
 
     return (
 
-        <div
-        className="
-        flex
-        justify-center
-        mb-4
-        "
+        <button
+
+            onClick={undoMove}
+
+            className="
+            bg-slate-900/70
+            backdrop-blur-md
+
+            border
+            border-slate-700
+
+            hover:bg-slate-800
+
+            rounded-xl
+
+            px-4
+            py-2
+
+            text-sm
+            font-semibold
+
+            transition-all
+            duration-200
+
+            shadow-lg
+            "
+
         >
 
-            <button
+            ↶ Undo
 
-                onClick={undoMove}
+        </button>
 
-                className="
-                bg-red-600
-                px-4
-                py-2
-                rounded
-                "
-
-            >
-
-                Undo Move
-
-            </button>
-
-        </div>
     );
+
 }

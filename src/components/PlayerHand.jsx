@@ -13,52 +13,105 @@ export default function PlayerHand({
 
     return (
 
-       <div
+        <div
 
-className={
+            className={
 
-    vertical
+                vertical
 
-   ? "flex flex-col gap-1"
-   : "flex justify-center -space-x-1"
-     }
-     >
+                ? "flex flex-col -space-y-8"
 
-            {cards.map(
+                : "flex justify-center items-end"
 
-                (card, index) => (
+            }
 
-                   <Card
+        >
 
-                   key={index}
+            {cards.map((card, index) => {
 
-                   card={card}
+                const middle = (cards.length - 1) / 2;
 
-                   isTrump={
-                   trumpSuit &&
-                   card.suit === trumpSuit
-                   }
+                const offset = index - middle;
 
-                    onClick={() => {
-                            if (
+                return (
 
-                                currentPlayer ===
-                                playerNumber
+                    <div
 
-                            ) {
+                        key={index}
 
-                                playCard(
-                                    index
-                                );
+                        className="transition-all duration-200"
+
+                        style={
+
+                            vertical
+
+                            ? {
+
+                                marginTop: "-28px",
+
+                                zIndex: index
+
+                              }
+
+                            : {
+    transform: `
+       rotate(${offset * 0.8}deg)
+translateY(${Math.pow(offset, 2) * 0.20}px)
+    `,
+
+    marginLeft:
+        index === 0
+        ? "0px"
+        : "-24px",
+
+    transformOrigin: "bottom center",
+
+    zIndex: index
+}
+
+                        }
+
+                    >
+
+                        <Card
+
+                            card={card}
+
+                            isTrump={
+
+                                trumpSuit &&
+
+                                card.suit === trumpSuit
+
                             }
-                        }}
 
-                    />
+                            onClick={() => {
 
-                )
+                                if (
 
-            )}
+                                    currentPlayer ===
+                                    playerNumber
+
+                                ) {
+
+                                    playCard(
+                                        index
+                                    );
+
+                                }
+
+                            }}
+
+                        />
+
+                    </div>
+
+                );
+
+            })}
 
         </div>
+
     );
+
 }

@@ -1,16 +1,6 @@
 export default function GameInfo({
 
     currentPlayer,
-    trumpSuit,
-    tableDahlas,
-    tableDahlaSuits,
-    capturedA,
-    capturedB,
-    teamA,
-    teamB,
-    currentRound,
-    matchA,
-    matchB,
     matchWinner,
     matchOver,
     resetMatch
@@ -21,278 +11,67 @@ export default function GameInfo({
 
         <div
         className="
-        text-lg
-        font-bold
         text-center
         mb-3
         "
         >
 
-            <div>
-
-                ▶ Player
-                {' '}
-                {currentPlayer + 1}
-                {' '}
-                Turn
-
-            </div>
-
-            <div className="mt-1">
-
-                Round:
-                {' '}
-                {currentRound}/5
-
-                {' | '}
-
-                Trump:
-                {' '}
-
-                {
-
-                    trumpSuit
-
-                    ? (
-
-                        <span
-                        className={
-                            trumpSuit === '♥'
-                            ||
-                            trumpSuit === '♦'
-                            ? 'text-red-500'
-                           : 'text-gray-300'
-                        }
-                        >
-
-                            {trumpSuit}
-
-                        </span>
-
-                    )
-
-                    : 'None'
-
-                }
-
-            </div>
-
-            <div>
-
-                Dahlas:
-                {' '}
-                {tableDahlas}
-
-                {' | '}
-
-                Team A:
-                {' '}
-                {teamA}
-
-                {' | '}
-
-                Team B:
-                {' '}
-                {teamB}
-
-                {' | '}
-
-                Points:
-                {' '}
-
-                {matchA}
-
-                {' - '}
-
-                {matchB}
-
-            </div>
-
-            {
-
-                tableDahlaSuits.length > 0 && (
-
-                    <div
-                    className="
-                    mt-1
-                    text-2xl
-                    tracking-widest
-                    "
-                    >
-
-                        {
-
-                            tableDahlaSuits.map(
-
-                                (suit, index) => (
-
-                                    <span
-
-                                        key={index}
-
-                                        className={`
-
-                                        mx-1
-
-                                        ${
-
-                                            suit === '♥'
-                                            ||
-                                            suit === '♦'
-
-                                            ? 'text-red-500'
-
-                                           : 'text-gray-300'
-
-                                        }
-
-                                        `}
-
-                                    >
-
-                                        {suit}
-
-                                    </span>
-
-                                )
-
-                            )
-
-                        }
-
-                    </div>
-
-                )
-
-            }
+            {/* Current Turn */}
 
             <div
             className="
-            mt-2
-            text-base
+            inline-flex
+            items-center
+            gap-2
+
+            px-4
+            py-2
+
+            bg-slate-900/60
+            backdrop-blur-sm
+
+            border
+            border-slate-700
+
+            rounded-xl
+
+            text-lg
+            font-bold
             "
             >
 
-                <div>
+                <span className="text-blue-400">
+                    ▶
+                </span>
 
-                    Team A Captured:
-
-                    {' '}
-
-                    {
-
-                        capturedA.length > 0
-
-                        ? capturedA.map(
-
-                            (suit, index) => (
-
-                                <span
-
-                                    key={index}
-
-                                    className={`
-
-                                    mx-1
-
-                                    ${
-
-                                        suit === '♥'
-                                        ||
-                                        suit === '♦'
-
-                                        ? 'text-red-500'
-
-                                        : 'text-gray-300'
-
-                                    }
-
-                                    `}
-
-                                >
-
-                                    {suit}
-
-                                </span>
-
-                            )
-
-                        )
-
-                        : '-'
-
-                    }
-
-                </div>
-
-                <div>
-
-                    Team B Captured:
-
-                    {' '}
-
-                    {
-
-                        capturedB.length > 0
-
-                        ? capturedB.map(
-
-                            (suit, index) => (
-
-                                <span
-
-                                    key={index}
-
-                                    className={`
-
-                                    mx-1
-
-                                    ${
-
-                                        suit === '♥'
-                                        ||
-                                        suit === '♦'
-
-                                        ? 'text-red-500'
-
-                                       : 'text-gray-300'
-                                    }
-
-                                    `}
-
-                                >
-
-                                    {suit}
-
-                                </span>
-
-                            )
-
-                        )
-
-                        : '-'
-
-                    }
-
-                </div>
+                Player {currentPlayer + 1} Turn
 
             </div>
+
+            {/* Match Winner */}
 
             {
 
                 matchWinner && (
 
-                    <div>
+                    <div
+                    className="
+                    mt-3
+                    text-xl
+                    font-bold
+                    text-yellow-400
+                    "
+                    >
 
-                        Winner:
-                        {' '}
-                        {matchWinner}
+                        🏆 Winner: {matchWinner}
 
                     </div>
 
                 )
 
             }
+
+            {/* New Match Button */}
 
             {
 
@@ -303,11 +82,17 @@ export default function GameInfo({
                         onClick={resetMatch}
 
                         className="
-                        mt-2
+                        mt-3
+
                         bg-blue-600
-                        px-4
+                        hover:bg-blue-500
+
+                        px-5
                         py-2
-                        rounded
+
+                        rounded-xl
+
+                        font-bold
                         "
 
                     >
