@@ -28,17 +28,29 @@ relative
 
 ${
 
-    large
+   large
 
-    ? `
-      w-20
-      h-28
-      `
+? `
+  w-20
+  h-28
 
-    : `
-      w-16
-      h-24
-      `
+  md:w-24
+  md:h-32
+
+  lg:w-28
+  lg:h-40
+  `
+
+: `
+  w-14
+  h-20
+
+  md:w-16
+  md:h-24
+
+  lg:w-[72px]
+  lg:h-[104px]
+  `
 }
 bg-white
 rounded-xl

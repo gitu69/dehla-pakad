@@ -54,17 +54,11 @@ export default function PlayerHand({
                               }
 
                             : {
-    transform: `
-       rotate(${offset * 0.8}deg)
-translateY(${Math.pow(offset, 2) * 0.20}px)
-    `,
 
     marginLeft:
         index === 0
         ? "0px"
-        : "-24px",
-
-    transformOrigin: "bottom center",
+        : "-18px",
 
     zIndex: index
 }

@@ -1137,13 +1137,16 @@ setMatchWinner(
 
     return (
 
-        <div
+       <div
 className="
 relative
-min-h-screen
+w-screen
+h-screen
+overflow-hidden
+
 bg-[radial-gradient(circle_at_center,_#102a66,_#081830,_#030712)]
+
 text-white
-p-4
 "
 >
 
@@ -1159,11 +1162,11 @@ p-4
 <div
 className="
 absolute
-top-2
-left-2
-sm:top-4
-sm:left-4
-z-20
+top-3
+left-3
+md:top-4
+md:left-4
+z-30
 "
 >
 <ScoreBoard
@@ -1182,14 +1185,17 @@ z-20
 <div
 className="
 absolute
-top-2
-right-2
-sm:top-4
-sm:right-4
-z-20
+
+top-[70px]
+right-[18px]
+
+md:top-[78px]
+md:right-[28px]
+
 flex
-gap-1
-sm:gap-2
+gap-2
+
+z-40
 "
 >
 
@@ -1216,12 +1222,16 @@ sm:gap-2
 <div
 className="
 absolute
-top-[10px]
-sm:top-[20px]
-md:top-[30px]
+
+top-[6px]
 left-1/2
 -translate-x-1/2
-z-20
+
+flex
+flex-col
+items-center
+
+z-40
 "
 >
 
@@ -1296,11 +1306,13 @@ w-full
 <div
 className="
 absolute
-left-[4vw]
-sm:left-[5vw]
-md:left-[6vw]
+left-[12px]
 
-top-[45%]
+md:left-[18px]
+
+lg:left-[28px]
+
+top-1/2
 -translate-y-1/2
 z-20
 "
@@ -1357,30 +1369,21 @@ showAllCards
 <div
 className="
 absolute
+
 left-1/2
 top-1/2
 
 -translate-x-1/2
 -translate-y-1/2
 
-w-[88vw]
-max-w-[600px]
+w-[72vw]
+max-w-[900px]
 
-h-[38vh]
-max-h-[320px]
-
-rounded-3xl
-border
-border-slate-500
-
-bg-slate-800/20
-backdrop-blur-sm
+h-[46vh]
 
 flex
 items-center
 justify-center
-
-shadow-xl
 "
 >
 
@@ -1394,13 +1397,21 @@ shadow-xl
 <div
 className="
 absolute
-right-[4vw]
-sm:right-[5vw]
-md:right-[6vw]
 
-top-[45%]
+right-[12px]
+
+md:right-[18px]
+
+lg:right-[28px]
+
+top-1/2
 -translate-y-1/2
-z-20
+
+flex
+flex-col
+items-center
+
+z-40
 "
 >
 
@@ -1456,10 +1467,13 @@ showAllCards
 
 <div
 className="
-fixed
-bottom-[50px]
-sm:bottom-[60px]
-md:bottom-[70px]
+absolute
+
+bottom-[2px]
+
+sm:bottom-[4px]
+
+md:bottom-[8px]
 
 left-1/2
 -translate-x-1/2
@@ -1474,7 +1488,22 @@ w-full
 "
 >
 
-   <PlayerAvatar
+  <PlayerHand
+
+    cards={players[0]}
+
+    currentPlayer={currentPlayer}
+
+    playerNumber={0}
+
+    playCard={playCard}
+
+    trumpSuit={trumpSuit}
+
+/>
+
+<div className="-mt-5 relative z-50">
+    <PlayerAvatar
 
     playerName="You"
 
@@ -1488,23 +1517,9 @@ w-full
 
     showCardFan={false}
 
+    position="bottomPlayer"
 />
-
-
-    <PlayerHand
-
-        cards={players[0]}
-
-        currentPlayer={currentPlayer}
-
-        playerNumber={0}
-
-        playCard={playCard}
-
-        trumpSuit={trumpSuit}
-
-    />
-
+</div>
 </div>
         </div>
     );

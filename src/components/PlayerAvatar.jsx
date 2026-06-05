@@ -35,74 +35,60 @@ export default function PlayerAvatar({
                     {[...Array(Math.min(cardCount, 13))].map((_, index) => {
 
                         const total =
-                        Math.min(cardCount, 13);
+                            Math.min(cardCount, 13);
 
                         const center =
-                        (total - 1) / 2;
+                            (total - 1) / 2;
 
                         const offset =
-                        index - center;
-
-                        const FAN_DISTANCE = 72;
+                            index - center;
 
                         let left = 0;
                         let top = 0;
-                        let rotate = 0;
                         let transformOrigin = "center center";
-                        
 
-                        // PLAYER 2 (TOP)
+                       // PLAYER 2 (TOP)
 
-                        if (position === "bottom") {
-
-                            left =
-                                offset * 3;
-
-                            top =
-    FAN_DISTANCE -
-    Math.pow(offset, 2) * 0.25;
-
-                            rotate =
-                                -offset * 5;
-
-                            transformOrigin =
-                                "top center";
-                        }
-
-                        // PLAYER 3 (RIGHT SIDE OF TABLE)
-
-                   else if (position === "left") {
+if (position === "bottom") {
 
     left =
-    -FAN_DISTANCE +
-    Math.pow(offset, 2) * 0.15;
+        offset * 14;
 
-top =
-    offset * 4;
-
-rotate =
-    offset * 0.8;
+    top =
+        30;
 
     transformOrigin =
         "center center";
 }
 
-                        // PLAYER 4 (LEFT SIDE OF TABLE)
+                       // PLAYER 3 (RIGHT SIDE)
 
-                    else if (position === "right") {
+else if (position === "left") {
 
-  left =
-    FAN_DISTANCE -
-    Math.pow(offset, 2) * 0.15;
+    left =
+        -54;
 
-top =
-    offset * 4;
+    top =
+        offset * 10;
 
-rotate =
-    -offset * 0.8;
     transformOrigin =
         "center center";
 }
+
+                        // PLAYER 4 (LEFT SIDE)
+
+else if (position === "right") {
+
+    left =
+        18;
+
+    top =
+        offset * 10;
+
+    transformOrigin =
+        "center center";
+}
+
                         return (
 
                             <div
@@ -110,14 +96,32 @@ rotate =
                                 key={index}
 
                                 className="
-                                absolute
-                              w-6
-h-9
-                                bg-red-500
+absolute
+
+w-8
+h-12
+
+sm:w-9
+sm:h-14
+
+md:w-10
+md:h-16
+
+lg:w-11
+lg:h-[72px]
+
                                 border
-                                border-white
-                                rounded-[2px]
-                                shadow
+                                border-white/70
+
+                                rounded-[4px]
+
+                                shadow-md
+
+                                bg-center
+                                bg-cover
+                                bg-no-repeat
+
+                                overflow-hidden
                                 "
 
                                 style={{
@@ -125,15 +129,19 @@ h-9
                                     left: `${left}px`,
                                     top: `${top}px`,
 
-                                  transform:
+                                    backgroundImage:
+                                        "url('/card-back.png')",
 
-position === "left"
-? `rotate(${90 + rotate}deg)`
+                                    transform:
 
-: position === "right"
-? `rotate(${-90 + rotate}deg)`
+                                    position === "left"
+                                    ? "rotate(90deg)"
 
-: `rotate(${rotate}deg)`,
+                                    : position === "right"
+                                    ? "rotate(-90deg)"
+
+                                    : "rotate(0deg)",
+
                                     transformOrigin,
 
                                     zIndex: index
@@ -165,6 +173,7 @@ position === "left"
                 sm:h-12
 
                 rounded-full
+
                 flex
                 items-center
                 justify-center
@@ -179,19 +188,18 @@ position === "left"
 
                 ${
 
-                    isCurrentPlayer
+    isCurrentPlayer
 
-                    ? `
-                    border-yellow-400
-                    shadow-lg
-                    shadow-yellow-400/70
-                    animate-pulse
-                    scale-110
-                    `
-                    : `
-                    border-slate-300
-                    `
-                }
+        ? `
+        border-yellow-400
+        shadow-lg
+        shadow-yellow-400/70
+        scale-110
+        `
+        : `
+        border-slate-300
+        `
+}
 
                 bg-slate-700
                 `}
@@ -202,22 +210,102 @@ position === "left"
 
             </div>
 
-           {/* NAME */}
+            {/* NAME */}
 
-{(position === "bottom" || position === "bottomPlayer") ? (
+{position === "bottom" ? (
+
+    // PLAYER 2
 
     <div
         className="
-        absolute
-        left-full
-        ml-2
-        top-1/2
-        -translate-y-1/2
+        mt-1
+
+        px-3
+        py-1
+
+        rounded-xl
+
+        bg-black/80
+        border
+        border-amber-700
 
         text-xs
         font-bold
         text-white
+
         whitespace-nowrap
+
+        shadow-lg
+        "
+    >
+        {playerName}
+    </div>
+
+) : position === "bottomPlayer" ? (
+
+    // PLAYER 1
+
+    <div
+        className="
+        absolute
+
+        bottom-full
+        mb-2
+
+        left-1/2
+        -translate-x-1/2
+
+        px-3
+        py-1
+
+        rounded-xl
+
+        bg-black/80
+        border
+        border-amber-700
+
+        text-xs
+        font-bold
+        text-white
+
+        whitespace-nowrap
+
+        shadow-lg
+        "
+    >
+        {playerName}
+    </div>
+
+) : position === "left" ? (
+
+    // PLAYER 3
+
+    <div
+        className="
+        absolute
+
+        right-full
+        mr-2
+
+        top-1/2
+        -translate-y-1/2
+
+        px-3
+        py-1
+
+        rounded-xl
+
+        bg-black/80
+        border
+        border-amber-700
+
+        text-xs
+        font-bold
+        text-white
+
+        whitespace-nowrap
+
+        shadow-lg
         "
     >
         {playerName}
@@ -225,13 +313,34 @@ position === "left"
 
 ) : (
 
+    // PLAYER 4
+
     <div
         className="
-        mt-1
+        absolute
+
+        left-full
+        ml-2
+
+        top-1/2
+        -translate-y-1/2
+
+        px-3
+        py-1
+
+        rounded-xl
+
+        bg-black/80
+        border
+        border-amber-700
+
         text-xs
         font-bold
         text-white
+
         whitespace-nowrap
+
+        shadow-lg
         "
     >
         {playerName}

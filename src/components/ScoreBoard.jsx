@@ -28,9 +28,10 @@ export default function ScoreBoard({
   return (
     <div
       className="
-      w-[140px]
-      sm:w-[180px]
-      md:w-[220px]
+      w-[130px]
+sm:w-[160px]
+md:w-[180px]
+lg:w-[220px]
       bg-slate-900/70
       backdrop-blur-md
       border
