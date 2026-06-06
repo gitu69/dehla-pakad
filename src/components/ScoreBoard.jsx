@@ -28,23 +28,22 @@ export default function ScoreBoard({
   return (
     <div
       className="
-      w-[130px]
-sm:w-[160px]
+      w-[110px]
+sm:w-[140px]
 md:w-[180px]
-lg:w-[220px]
       bg-slate-900/70
       backdrop-blur-md
       border
       border-slate-700
       rounded-2xl
-      p-3
+      p-2
       shadow-xl
       "
     >
 
       {/* Top Row */}
 
-      <div className="flex justify-between text-xs mb-3">
+      <div className="flex justify-between text-xs mb-1">
 
         <span>
           Round {currentRound}/5
@@ -58,13 +57,13 @@ lg:w-[220px]
 
       {/* Team Section */}
 
-      <div className="flex items-start justify-between mb-3">
+      <div className="flex items-start justify-between mb-1">
 
         {/* Team A */}
 
         <div className="text-center flex-1">
 
-          <p className="text-blue-400 text-sm font-semibold">
+          <p className="text-blue-400 text-xs font-semibold">
             Team A
           </p>
 
@@ -75,7 +74,9 @@ lg:w-[220px]
                 <span
                   key={index}
                   className="
-                  text-lg
+                  text-sm
+md:text-base
+lg:text-lg
                   text-blue-400
                   "
                 >
@@ -98,9 +99,11 @@ lg:w-[220px]
           className="
           text-slate-400
           font-bold
-          text-lg
-          px-2
-          pt-2
+          text-sm
+md:text-base
+lg:text-lg
+          px-1
+          pt-1
           "
         >
           VS
@@ -110,7 +113,7 @@ lg:w-[220px]
 
         <div className="text-center flex-1">
 
-          <p className="text-red-400 text-sm font-semibold">
+          <p className="text-red-400 text-xs font-semibold">
             Team B
           </p>
 
@@ -121,7 +124,9 @@ lg:w-[220px]
                 <span
                   key={index}
                   className="
-                  text-lg
+                  text-sm
+md:text-base
+lg:text-lg
                   text-red-400
                   "
                 >
@@ -155,7 +160,9 @@ lg:w-[220px]
               <span
                 key={index}
                 className="
-                text-lg
+                text-sm
+md:text-base
+lg:text-lg
                 text-yellow-400
                 "
               >
@@ -174,7 +181,7 @@ lg:w-[220px]
 
       {/* Match Score */}
 
-      <div className="border-t border-slate-700 pt-3 mt-2">
+      <div className="border-t border-slate-700 pt-1 mt-1">
 
         <p className="text-center text-sm text-slate-300">
           Match Score
@@ -183,7 +190,8 @@ lg:w-[220px]
         <p
           className="
           text-center
-          text-4xl
+          text-2xl
+md:text-3xl
           font-bold
           text-white
           "
