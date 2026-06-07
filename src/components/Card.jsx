@@ -31,11 +31,11 @@ ${
    large
 
 ? `
-  w-12
-  h-18
+  w-10
+  h-16
 
-  sm:w-14
-  sm:h-20
+  sm:w-12
+  sm:h-18
 
   md:w-20
   md:h-28
@@ -94,7 +94,11 @@ ${
             items-center
             leading-none
 
-            ${large ? 'text-[10px] md:text-xs' : 'text-xs'}
+            ${
+                large
+                ? 'text-[8px] sm:text-[10px] md:text-xs'
+                : 'text-xs'
+            }
 
             font-bold
             ${suitColor}
@@ -123,7 +127,7 @@ ${
 
             ${
                 large
-                ? 'text-2xl md:text-3xl'
+                ? 'text-xl sm:text-2xl md:text-3xl'
                 : 'text-3xl'
             }
 
@@ -147,7 +151,11 @@ ${
             items-center
             leading-none
 
-            ${large ? 'text-[10px] md:text-xs' : 'text-xs'}
+            ${
+                large
+                ? 'text-[8px] sm:text-[10px] md:text-xs'
+                : 'text-xs'
+            }
 
             font-bold
             rotate-180

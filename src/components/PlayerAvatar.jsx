@@ -66,7 +66,7 @@ if (position === "bottom") {
 else if (position === "left") {
 
     left =
-        -0;
+        -20;
 
     top =
         offset * 10;
@@ -80,7 +80,7 @@ else if (position === "left") {
 else if (position === "right") {
 
     left =
-        -35;
+        -20;
 
     top =
         offset * 10;

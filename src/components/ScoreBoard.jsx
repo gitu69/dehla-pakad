@@ -37,15 +37,15 @@ export default function ScoreBoard({
 
       rounded-xl
 
-      px-2
-      py-1.5
+      px-1.5
+      py-1
 
       shadow-xl
 
-      w-[240px]
-      sm:w-[300px]
-      md:w-[380px]
-      lg:w-[450px]
+      w-[210px]
+      sm:w-[260px]
+      md:w-[340px]
+      lg:w-[420px]
       "
     >
 
@@ -73,9 +73,27 @@ export default function ScoreBoard({
           Trump: {trumpSuit || "None"}
         </span>
 
-        <span className="text-yellow-400">
-          Table: {tableDahlaSuits.length}
-        </span>
+       <div className="flex items-center gap-1 text-yellow-400">
+
+  <span>Table:</span>
+
+  {tableDahlaSuits.length > 0 ? (
+
+    tableDahlaSuits.map((suit, index) => (
+
+      <span key={index}>
+        {suitIcon(suit)}
+      </span>
+
+    ))
+
+  ) : (
+
+    <span>-</span>
+
+  )}
+
+</div>
 
       </div>
 
@@ -120,7 +138,7 @@ export default function ScoreBoard({
         items-center
         justify-between
 
-        gap-2
+        gap-1
         "
       >
 

@@ -1488,19 +1488,21 @@ w-full
 "
 >
 
+  <div className="translate-y-8 md:translate-y-5">
   <PlayerHand
 
-    cards={players[0]}
+      cards={players[0]}
 
-    currentPlayer={currentPlayer}
+      currentPlayer={currentPlayer}
 
-    playerNumber={0}
+      playerNumber={0}
 
-    playCard={playCard}
+      playCard={playCard}
 
-    trumpSuit={trumpSuit}
+      trumpSuit={trumpSuit}
 
-/>
+  />
+</div>
 
 <div className="-mt-5 relative z-50">
     <PlayerAvatar
