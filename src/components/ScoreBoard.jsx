@@ -37,88 +37,92 @@ export default function ScoreBoard({
 
       rounded-xl
 
-      px-3
-      py-2
+      px-2
+      py-1.5
 
       shadow-xl
 
-      w-[320px]
-      sm:w-[380px]
-      md:w-[500px]
+      w-[240px]
+      sm:w-[300px]
+      md:w-[380px]
+      lg:w-[450px]
       "
     >
 
       {/* INFO ROW */}
 
-<div
-  className="
-  flex
-  items-center
-  justify-between
+      <div
+        className="
+        flex
+        items-center
+        justify-between
 
-  text-xs
-  md:text-sm
+        text-[10px]
+        sm:text-xs
+        md:text-sm
 
-  mb-2
-  "
->
+        mb-1
+        "
+      >
 
-  <span>
-    Round {currentRound}/5
-  </span>
+        <span>
+          Round {currentRound}/5
+        </span>
 
-  <span>
-    Trump: {trumpSuit || "None"}
-  </span>
+        <span>
+          Trump: {trumpSuit || "None"}
+        </span>
 
-  <span className="text-yellow-400">
-    Table: {tableDahlaSuits.length}
-  </span>
+        <span className="text-yellow-400">
+          Table: {tableDahlaSuits.length}
+        </span>
 
-</div>
+      </div>
 
-{/* MATCH SCORE */}
+      {/* MATCH SCORE */}
 
-<div
-  className="
-  flex
-  justify-center
-  items-center
+      <div
+        className="
+        flex
+        justify-center
+        items-center
 
-  border-t
-  border-b
-  border-slate-700
+        border-t
+        border-b
+        border-slate-700
 
-  py-1
-  mb-2
-  "
->
+        py-0.5
+        mb-1
+        "
+      >
 
-  <span
-    className="
-    text-xl
-    md:text-2xl
+        <span
+          className="
+          text-lg
+          md:text-xl
+          lg:text-2xl
 
-    font-bold
+          font-bold
 
-    text-white
-    "
-  >
-    {matchA} - {matchB}
-  </span>
+          text-white
+          "
+        >
+          {matchA} - {matchB}
+        </span>
 
-</div>
+      </div>
 
-{/* TEAM ROW */}
+      {/* TEAM ROW */}
 
-<div
-  className="
-  flex
-  items-center
-  justify-between
-  gap-4
-  "
->
+      <div
+        className="
+        flex
+        items-center
+        justify-between
+
+        gap-2
+        "
+      >
 
         {/* TEAM A */}
 
@@ -126,7 +130,7 @@ export default function ScoreBoard({
           className="
           flex
           items-center
-          gap-2
+          gap-1
           "
         >
 
@@ -134,7 +138,9 @@ export default function ScoreBoard({
             className="
             text-blue-400
             font-semibold
-            text-xs
+
+            text-[10px]
+            sm:text-xs
             md:text-sm
             "
           >
@@ -145,7 +151,7 @@ export default function ScoreBoard({
             className="
             flex
             gap-1
-            min-w-[40px]
+            min-w-[24px]
             "
           >
 
@@ -157,7 +163,8 @@ export default function ScoreBoard({
                   key={index}
                   className="
                   text-blue-400
-                  text-sm
+                  text-xs
+                  sm:text-sm
                   "
                 >
                   {suitIcon(suit)}
@@ -167,7 +174,7 @@ export default function ScoreBoard({
 
             ) : (
 
-              <span className="text-slate-500">
+              <span className="text-slate-500 text-xs">
                 -
               </span>
 
@@ -183,8 +190,8 @@ export default function ScoreBoard({
           className="
           text-slate-500
           font-bold
+
           text-xs
-          md:text-sm
           "
         >
           VS
@@ -196,7 +203,7 @@ export default function ScoreBoard({
           className="
           flex
           items-center
-          gap-2
+          gap-1
           "
         >
 
@@ -204,7 +211,9 @@ export default function ScoreBoard({
             className="
             text-red-400
             font-semibold
-            text-xs
+
+            text-[10px]
+            sm:text-xs
             md:text-sm
             "
           >
@@ -215,7 +224,7 @@ export default function ScoreBoard({
             className="
             flex
             gap-1
-            min-w-[40px]
+            min-w-[24px]
             "
           >
 
@@ -227,7 +236,8 @@ export default function ScoreBoard({
                   key={index}
                   className="
                   text-red-400
-                  text-sm
+                  text-xs
+                  sm:text-sm
                   "
                 >
                   {suitIcon(suit)}
@@ -237,7 +247,7 @@ export default function ScoreBoard({
 
             ) : (
 
-              <span className="text-slate-500">
+              <span className="text-slate-500 text-xs">
                 -
               </span>
 
