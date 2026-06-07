@@ -29,21 +29,28 @@ export default function ScoreBoard({
     <div
       className="
       w-[110px]
-sm:w-[140px]
-md:w-[180px]
+      sm:w-[140px]
+      md:w-[180px]
+
       bg-slate-900/70
       backdrop-blur-md
+
       border
       border-slate-700
-      rounded-2xl
+
+      rounded-xl
+      md:rounded-2xl
+
       p-2
+      md:p-3
+
       shadow-xl
       "
     >
 
       {/* Top Row */}
 
-      <div className="flex justify-between text-xs mb-1">
+      <div className="flex justify-between text-xs mb-2">
 
         <span>
           Round {currentRound}/5
@@ -57,17 +64,17 @@ md:w-[180px]
 
       {/* Team Section */}
 
-      <div className="flex items-start justify-between mb-1">
+      <div className="flex items-start justify-between mb-2">
 
         {/* Team A */}
 
         <div className="text-center flex-1">
 
-          <p className="text-blue-400 text-xs font-semibold">
+          <p className="text-blue-400 text-xs md:text-sm font-semibold">
             Team A
           </p>
 
-          <div className="flex justify-center gap-1 flex-wrap mt-1 min-h-[24px]">
+          <div className="flex justify-center gap-1 flex-wrap mt-1 min-h-[18px]">
 
             {capturedA.length > 0 ? (
               capturedA.map((suit, index) => (
@@ -75,8 +82,7 @@ md:w-[180px]
                   key={index}
                   className="
                   text-sm
-md:text-base
-lg:text-lg
+                  md:text-base
                   text-blue-400
                   "
                 >
@@ -84,7 +90,7 @@ lg:text-lg
                 </span>
               ))
             ) : (
-              <span className="text-slate-500">
+              <span className="text-slate-500 text-xs">
                 -
               </span>
             )}
@@ -99,9 +105,10 @@ lg:text-lg
           className="
           text-slate-400
           font-bold
+
           text-sm
-md:text-base
-lg:text-lg
+          md:text-base
+
           px-1
           pt-1
           "
@@ -113,11 +120,11 @@ lg:text-lg
 
         <div className="text-center flex-1">
 
-          <p className="text-red-400 text-xs font-semibold">
+          <p className="text-red-400 text-xs md:text-sm font-semibold">
             Team B
           </p>
 
-          <div className="flex justify-center gap-1 flex-wrap mt-1 min-h-[24px]">
+          <div className="flex justify-center gap-1 flex-wrap mt-1 min-h-[18px]">
 
             {capturedB.length > 0 ? (
               capturedB.map((suit, index) => (
@@ -125,8 +132,7 @@ lg:text-lg
                   key={index}
                   className="
                   text-sm
-md:text-base
-lg:text-lg
+                  md:text-base
                   text-red-400
                   "
                 >
@@ -134,7 +140,7 @@ lg:text-lg
                 </span>
               ))
             ) : (
-              <span className="text-slate-500">
+              <span className="text-slate-500 text-xs">
                 -
               </span>
             )}
@@ -153,7 +159,7 @@ lg:text-lg
           Table
         </p>
 
-        <div className="flex justify-center gap-1 flex-wrap min-h-[24px]">
+        <div className="flex justify-center gap-1 flex-wrap min-h-[18px]">
 
           {tableDahlaSuits.length > 0 ? (
             tableDahlaSuits.map((suit, index) => (
@@ -161,8 +167,7 @@ lg:text-lg
                 key={index}
                 className="
                 text-sm
-md:text-base
-lg:text-lg
+                md:text-base
                 text-yellow-400
                 "
               >
@@ -170,7 +175,7 @@ lg:text-lg
               </span>
             ))
           ) : (
-            <span className="text-slate-500">
+            <span className="text-slate-500 text-xs">
               -
             </span>
           )}
@@ -181,17 +186,19 @@ lg:text-lg
 
       {/* Match Score */}
 
-      <div className="border-t border-slate-700 pt-1 mt-1">
+      <div className="border-t border-slate-700 pt-2 mt-1">
 
-        <p className="text-center text-sm text-slate-300">
+        <p className="text-center text-xs md:text-sm text-slate-300">
           Match Score
         </p>
 
         <p
           className="
           text-center
+
           text-2xl
-md:text-3xl
+          md:text-3xl
+
           font-bold
           text-white
           "

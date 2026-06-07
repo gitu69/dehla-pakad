@@ -55,7 +55,7 @@ if (position === "bottom") {
         offset * 14;
 
     top =
-        30;
+        0;
 
     transformOrigin =
         "center center";
@@ -66,7 +66,7 @@ if (position === "bottom") {
 else if (position === "left") {
 
     left =
-        -54;
+        -0;
 
     top =
         offset * 10;
@@ -80,7 +80,7 @@ else if (position === "left") {
 else if (position === "right") {
 
     left =
-        18;
+        -35;
 
     top =
         offset * 10;

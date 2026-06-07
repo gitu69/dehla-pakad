@@ -31,14 +31,17 @@ ${
    large
 
 ? `
-  w-20
-  h-28
+  w-12
+  h-18
 
-  md:w-24
-  md:h-32
+  sm:w-14
+  sm:h-20
 
-  lg:w-28
-  lg:h-40
+  md:w-20
+  md:h-28
+
+  lg:w-24
+  lg:h-32
   `
 
 : `
@@ -90,7 +93,9 @@ ${
             flex-col
             items-center
             leading-none
-            text-xs
+
+            ${large ? 'text-[10px] md:text-xs' : 'text-xs'}
+
             font-bold
             ${suitColor}
             `}
@@ -115,7 +120,13 @@ ${
             flex
             items-center
             justify-center
-            text-3xl
+
+            ${
+                large
+                ? 'text-2xl md:text-3xl'
+                : 'text-3xl'
+            }
+
             ${suitColor}
             `}
             >
@@ -135,7 +146,9 @@ ${
             flex-col
             items-center
             leading-none
-            text-xs
+
+            ${large ? 'text-[10px] md:text-xs' : 'text-xs'}
+
             font-bold
             rotate-180
             ${suitColor}
@@ -151,8 +164,6 @@ ${
                 </span>
 
             </div>
-
-           
 
         </div>
 
