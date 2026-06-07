@@ -26,73 +26,151 @@ export default function ScoreBoard({
   }
 
   return (
+
     <div
       className="
-      w-[110px]
-      sm:w-[140px]
-      md:w-[180px]
-
-      bg-slate-900/70
+      bg-slate-900/75
       backdrop-blur-md
 
       border
       border-slate-700
 
       rounded-xl
-      md:rounded-2xl
 
-      p-2
-      md:p-3
+      px-3
+      py-2
 
       shadow-xl
+
+      w-[320px]
+      sm:w-[380px]
+      md:w-[500px]
       "
     >
 
-      {/* Top Row */}
+      {/* INFO ROW */}
 
-      <div className="flex justify-between text-xs mb-2">
+<div
+  className="
+  flex
+  items-center
+  justify-between
 
-        <span>
-          Round {currentRound}/5
-        </span>
+  text-xs
+  md:text-sm
 
-        <span>
-          Trump: {trumpSuit || "None"}
-        </span>
+  mb-2
+  "
+>
 
-      </div>
+  <span>
+    Round {currentRound}/5
+  </span>
 
-      {/* Team Section */}
+  <span>
+    Trump: {trumpSuit || "None"}
+  </span>
 
-      <div className="flex items-start justify-between mb-2">
+  <span className="text-yellow-400">
+    Table: {tableDahlaSuits.length}
+  </span>
 
-        {/* Team A */}
+</div>
 
-        <div className="text-center flex-1">
+{/* MATCH SCORE */}
 
-          <p className="text-blue-400 text-xs md:text-sm font-semibold">
+<div
+  className="
+  flex
+  justify-center
+  items-center
+
+  border-t
+  border-b
+  border-slate-700
+
+  py-1
+  mb-2
+  "
+>
+
+  <span
+    className="
+    text-xl
+    md:text-2xl
+
+    font-bold
+
+    text-white
+    "
+  >
+    {matchA} - {matchB}
+  </span>
+
+</div>
+
+{/* TEAM ROW */}
+
+<div
+  className="
+  flex
+  items-center
+  justify-between
+  gap-4
+  "
+>
+
+        {/* TEAM A */}
+
+        <div
+          className="
+          flex
+          items-center
+          gap-2
+          "
+        >
+
+          <span
+            className="
+            text-blue-400
+            font-semibold
+            text-xs
+            md:text-sm
+            "
+          >
             Team A
-          </p>
+          </span>
 
-          <div className="flex justify-center gap-1 flex-wrap mt-1 min-h-[18px]">
+          <div
+            className="
+            flex
+            gap-1
+            min-w-[40px]
+            "
+          >
 
             {capturedA.length > 0 ? (
+
               capturedA.map((suit, index) => (
+
                 <span
                   key={index}
                   className="
-                  text-sm
-                  md:text-base
                   text-blue-400
+                  text-sm
                   "
                 >
                   {suitIcon(suit)}
                 </span>
+
               ))
+
             ) : (
-              <span className="text-slate-500 text-xs">
+
+              <span className="text-slate-500">
                 -
               </span>
+
             )}
 
           </div>
@@ -101,48 +179,68 @@ export default function ScoreBoard({
 
         {/* VS */}
 
-        <div
+        <span
           className="
-          text-slate-400
+          text-slate-500
           font-bold
-
-          text-sm
-          md:text-base
-
-          px-1
-          pt-1
+          text-xs
+          md:text-sm
           "
         >
           VS
-        </div>
+        </span>
 
-        {/* Team B */}
+        {/* TEAM B */}
 
-        <div className="text-center flex-1">
+        <div
+          className="
+          flex
+          items-center
+          gap-2
+          "
+        >
 
-          <p className="text-red-400 text-xs md:text-sm font-semibold">
+          <span
+            className="
+            text-red-400
+            font-semibold
+            text-xs
+            md:text-sm
+            "
+          >
             Team B
-          </p>
+          </span>
 
-          <div className="flex justify-center gap-1 flex-wrap mt-1 min-h-[18px]">
+          <div
+            className="
+            flex
+            gap-1
+            min-w-[40px]
+            "
+          >
 
             {capturedB.length > 0 ? (
+
               capturedB.map((suit, index) => (
+
                 <span
                   key={index}
                   className="
-                  text-sm
-                  md:text-base
                   text-red-400
+                  text-sm
                   "
                 >
                   {suitIcon(suit)}
                 </span>
+
               ))
+
             ) : (
-              <span className="text-slate-500 text-xs">
+
+              <span className="text-slate-500">
                 -
               </span>
+
             )}
 
           </div>
@@ -151,63 +249,7 @@ export default function ScoreBoard({
 
       </div>
 
-      {/* Table Dehlas */}
-
-      <div className="border-t border-slate-700 pt-2">
-
-        <p className="text-xs text-yellow-400 mb-1">
-          Table
-        </p>
-
-        <div className="flex justify-center gap-1 flex-wrap min-h-[18px]">
-
-          {tableDahlaSuits.length > 0 ? (
-            tableDahlaSuits.map((suit, index) => (
-              <span
-                key={index}
-                className="
-                text-sm
-                md:text-base
-                text-yellow-400
-                "
-              >
-                {suitIcon(suit)}
-              </span>
-            ))
-          ) : (
-            <span className="text-slate-500 text-xs">
-              -
-            </span>
-          )}
-
-        </div>
-
-      </div>
-
-      {/* Match Score */}
-
-      <div className="border-t border-slate-700 pt-2 mt-1">
-
-        <p className="text-center text-xs md:text-sm text-slate-300">
-          Match Score
-        </p>
-
-        <p
-          className="
-          text-center
-
-          text-2xl
-          md:text-3xl
-
-          font-bold
-          text-white
-          "
-        >
-          {matchA} - {matchB}
-        </p>
-
-      </div>
-
     </div>
+
   );
 }
