@@ -60,8 +60,6 @@ export default function ScoreBoard({
         text-[10px]
         sm:text-xs
         md:text-sm
-
-        mb-1
         "
       >
 
@@ -73,62 +71,33 @@ export default function ScoreBoard({
           Trump: {trumpSuit || "None"}
         </span>
 
-       <div className="flex items-center gap-1 text-yellow-400">
+        <div className="flex items-center gap-1 text-yellow-400">
 
-  <span>Table:</span>
+          <span>Table:</span>
 
-  {tableDahlaSuits.length > 0 ? (
+          {tableDahlaSuits.length > 0 ? (
 
-    tableDahlaSuits.map((suit, index) => (
+            tableDahlaSuits.map((suit, index) => (
 
-      <span key={index}>
-        {suitIcon(suit)}
-      </span>
+              <span key={index}>
+                {suitIcon(suit)}
+              </span>
 
-    ))
+            ))
 
-  ) : (
+          ) : (
 
-    <span>-</span>
+            <span>-</span>
 
-  )}
+          )}
 
-</div>
-
-      </div>
-
-      {/* MATCH SCORE */}
-
-      <div
-        className="
-        flex
-        justify-center
-        items-center
-
-        border-t
-        border-b
-        border-slate-700
-
-        py-0.5
-        mb-1
-        "
-      >
-
-        <span
-          className="
-          text-lg
-          md:text-xl
-          lg:text-2xl
-
-          font-bold
-
-          text-white
-          "
-        >
-          {matchA} - {matchB}
-        </span>
+        </div>
 
       </div>
+
+      {/* DIVIDER */}
+
+      <div className="h-px bg-slate-700 my-1" />
 
       {/* TEAM ROW */}
 
@@ -208,7 +177,6 @@ export default function ScoreBoard({
           className="
           text-slate-500
           font-bold
-
           text-xs
           "
         >
@@ -274,6 +242,35 @@ export default function ScoreBoard({
           </div>
 
         </div>
+
+      </div>
+
+      {/* DIVIDER */}
+
+      <div className="h-px bg-slate-700 my-1" />
+
+      {/* MATCH SCORE */}
+
+      <div
+        className="
+        flex
+        justify-center
+        items-center
+        "
+      >
+
+        <span
+          className="
+          text-lg
+          md:text-xl
+          lg:text-2xl
+
+          font-bold
+          text-white
+          "
+        >
+          {matchA} - {matchB}
+        </span>
 
       </div>
 

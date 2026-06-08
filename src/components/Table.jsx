@@ -71,7 +71,7 @@ export default function Table({
 
                     position = `
                     absolute
-                    bottom-4
+                    bottom-0
                     left-1/2
                     -translate-x-1/2
                     `;
@@ -83,7 +83,7 @@ export default function Table({
 
                     position = `
                     absolute
-                    right-6
+                    right-24
                     top-1/2
                     -translate-y-1/2
                     `;
@@ -95,7 +95,7 @@ export default function Table({
 
                     position = `
                     absolute
-                    top-4
+                    top-0
                     left-1/2
                     -translate-x-1/2
                     `;
@@ -107,7 +107,7 @@ export default function Table({
 
                     position = `
                     absolute
-                    left-6
+                    left-24
                     top-1/2
                     -translate-y-1/2
                     `;
