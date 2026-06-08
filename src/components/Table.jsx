@@ -71,7 +71,7 @@ export default function Table({
 
                     position = `
                     absolute
-                    bottom-[-12px]
+                    bottom-[-8px]
                     left-1/2
                     -translate-x-1/2
                     `;
@@ -95,7 +95,7 @@ export default function Table({
 
                     position = `
                     absolute
-                    top-[-12px]
+                    top-[-8px]
                     left-1/2
                     -translate-x-1/2
                     `;

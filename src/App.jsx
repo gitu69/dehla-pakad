@@ -1488,7 +1488,7 @@ w-full
 "
 >
 
-  <div className="translate-y-8 md:translate-y-5">
+  <div className="translate-y-12 md:translate-y-7">
   <PlayerHand
 
       cards={players[0]}
