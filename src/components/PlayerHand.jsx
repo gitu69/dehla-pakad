@@ -7,6 +7,7 @@ export default function PlayerHand({
     playerNumber,
     playCard,
     trumpSuit,
+    leadSuit,
     vertical = false
 
 }) {
@@ -29,9 +30,17 @@ export default function PlayerHand({
 
             {cards.map((card, index) => {
 
-                const middle = (cards.length - 1) / 2;
+                const isLegalCard =
 
-                const offset = index - middle;
+                    !leadSuit ||
+
+                    !cards.some(
+                        c => c.suit === leadSuit
+                    )
+
+                        ? true
+
+                        : card.suit === leadSuit;
 
                 return (
 
@@ -39,7 +48,21 @@ export default function PlayerHand({
 
                         key={index}
 
-                        className="transition-all duration-200"
+                        className={`
+                            transition-all
+                            duration-200
+
+                            ${
+                                playerNumber === 0 &&
+                                currentPlayer === 0 &&
+                                leadSuit &&
+                                isLegalCard
+
+                                    ? "scale-110 -translate-y-2"
+
+                                    : ""
+                            }
+                        `}
 
                         style={
 
@@ -55,13 +78,13 @@ export default function PlayerHand({
 
                             : {
 
-    marginLeft:
-        index === 0
-        ? "0px"
-        : "-18px",
+                                marginLeft:
+                                    index === 0
+                                    ? "0px"
+                                    : "-18px",
 
-    zIndex: index
-}
+                                zIndex: index
+                            }
 
                         }
 
