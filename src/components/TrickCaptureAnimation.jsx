@@ -9,9 +9,9 @@ from '../animations/trickCaptureVariants';
 export default function TrickCaptureAnimation({
 
     show,
-    team,
-    tricks,
-    dahlas
+    winner,
+    trickCount,
+    dehlaCount
 
 }) {
 
@@ -25,9 +25,7 @@ export default function TrickCaptureAnimation({
 
                     <motion.div
 
-                        variants={
-                            trickCaptureVariants
-                        }
+                        variants={trickCaptureVariants}
 
                         initial="hidden"
 
@@ -39,156 +37,76 @@ export default function TrickCaptureAnimation({
                         fixed
                         inset-0
 
-                        z-[300]
-
-                        pointer-events-none
-
                         flex
                         items-center
                         justify-center
+
+                        pointer-events-none
+
+                        z-[210]
                         "
 
                     >
 
                         <div
                         className="
-                        flex
-                        flex-col
-                        items-center
+                        bg-slate-900/90
+
+                        border
+                        border-cyan-400/40
+
+                        backdrop-blur-sm
+
+                        rounded-2xl
+
+                        px-5
+                        py-3
+
+                        shadow-lg
+
+                        text-center
                         "
                         >
 
-                            {/* CARD STACK */}
-
                             <div
                             className="
-                            relative
-
-                            w-16
-                            h-20
-
-                            sm:w-20
-                            sm:h-24
-                            "
-                            >
-
-                                <div
-                                className="
-                                absolute
-
-                                w-12
-                                h-16
-
-                                sm:w-14
-                                sm:h-20
-
-                                bg-white
-
-                                rounded-lg
-
-                                border
-                                border-slate-300
-
-                                rotate-[-8deg]
-
-                                left-1
-                                top-1
-                                "
-                                />
-
-                                <div
-                                className="
-                                absolute
-
-                                w-12
-                                h-16
-
-                                sm:w-14
-                                sm:h-20
-
-                                bg-white
-
-                                rounded-lg
-
-                                border
-                                border-slate-300
-
-                                rotate-[4deg]
-
-                                left-1
-                                top-1
-                                "
-                                />
-
-                                <div
-                                className="
-                                absolute
-
-                                w-12
-                                h-16
-
-                                sm:w-14
-                                sm:h-20
-
-                                bg-white
-
-                                rounded-lg
-
-                                border
-                                border-slate-300
-                                "
-                                />
-
-                            </div>
-
-                            {/* TEXT */}
-
-                            <div
-                            className="
-                            mt-2
-
-                            text-center
-
-                            text-white
-
+                            text-cyan-300
                             font-semibold
-
-                            text-xs
-                            sm:text-sm
                             "
                             >
 
-                                Team {team}
+                                {
+
+                                    winner === 'A'
+
+                                    ? 'Team A'
+
+                                    : 'Team B'
+
+                                }
+
+                                {' '}
+                                Captured
 
                             </div>
 
                             <div
                             className="
-                            text-center
-
+                            text-sm
                             text-slate-300
-
-                            text-[10px]
-                            sm:text-xs
+                            mt-1
                             "
                             >
 
-                                {tricks} Tricks
+                                {trickCount}
+                                {' '}
+                                Tricks
 
-                            </div>
+                                {' • '}
 
-                            <div
-                            className="
-                            text-center
-
-                            text-yellow-300
-
-                            text-[10px]
-                            sm:text-xs
-                            "
-                            >
-
-                                {dahlas} Dahlas
+                                {dehlaCount}
+                                {' '}
+                                Dahlas
 
                             </div>
 

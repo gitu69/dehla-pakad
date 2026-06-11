@@ -425,22 +425,6 @@ function showMessage(text) {
 
         capturedTrickCountB,
 
-        showTrumpAnimation,
-
-trumpAnimationSuit,
-
-showDehlaAnimation,
-
-dehlaAnimationSuit,
-
-showTrickCaptureAnimation,
-
-trickCaptureWinner,
-
-capturedTrickAnimationCount,
-
-        capturedDehlaAnimationCount,
-
         currentRound,
 
 matchA,
@@ -1224,7 +1208,7 @@ matchA + roundPointsA;
 const updatedMatchB =
 matchB + roundPointsB;
 
-
+setHistory([]);
 
 
 
@@ -1309,8 +1293,6 @@ setTimeout(() => {
     // START NEXT ROUND
 
     function startNextRound(starter) {
-
-        
 
         const shuffledDeck =
         createDeck();
@@ -1482,38 +1464,6 @@ function undoMove() {
 
     setCapturedTrickCountB(
     previous.capturedTrickCountB
-    );
-
-    setShowTrumpAnimation(
-    previous.showTrumpAnimation
-);
-
-setTrumpAnimationSuit(
-    previous.trumpAnimationSuit
-);
-
-setShowDehlaAnimation(
-    previous.showDehlaAnimation
-);
-
-setDehlaAnimationSuit(
-    previous.dehlaAnimationSuit
-);
-
-setShowTrickCaptureAnimation(
-    previous.showTrickCaptureAnimation
-);
-
-setTrickCaptureWinner(
-    previous.trickCaptureWinner
-);
-
-setCapturedTrickAnimationCount(
-    previous.capturedTrickAnimationCount
-);
-
-    setCapturedDehlaAnimationCount(
-    previous.capturedDehlaAnimationCount
     );
 
     setLastWinner(
