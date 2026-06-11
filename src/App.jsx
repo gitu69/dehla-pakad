@@ -75,6 +75,15 @@ from './components/Message';
 import ScoreBoard
 from './components/ScoreBoard';
 
+import TrumpAnimation
+from './components/TrumpAnimation';
+
+import DehlaAnimation
+from './components/DehlaAnimation';
+
+import TrickCaptureAnimation
+from './components/trickCaptureAnimation';
+
 import UndoButton
 from './components/UndoButton';
 
@@ -83,6 +92,8 @@ from './components/ShowCardsButton';
 
 import AISwitchButton
 from './components/AISwitchButton';
+
+
 
 export default function App() {
 
@@ -117,13 +128,22 @@ export default function App() {
     const [teamB, setTeamB] =
     useState(0);
 
-    const [capturedA,
-setCapturedA] =
+    const [capturedA, setCapturedA] =
 useState([]);
 
-const [capturedB,
-setCapturedB] =
+const [capturedB, setCapturedB] =
 useState([]);
+
+const [uncapturedTricks, setUncapturedTricks] =
+useState([]);
+
+const [capturedTrickCountA,
+setCapturedTrickCountA] =
+useState(0);
+
+const [capturedTrickCountB,
+setCapturedTrickCountB] =
+useState(0);
 
     const [lastWinner, setLastWinner] =
     useState(null);
@@ -151,6 +171,50 @@ useState([]);
 
     const [history, setHistory] =
     useState([]);
+
+    const [showTrumpAnimation,
+setShowTrumpAnimation] =
+useState(false);
+
+const [trumpAnimationSuit,
+setTrumpAnimationSuit] =
+useState(null);
+
+const [showDehlaAnimation,
+setShowDehlaAnimation] =
+useState(false);
+
+const [dehlaAnimationSuit,
+setDehlaAnimationSuit] =
+useState(null);
+
+const [showTrickCaptureAnimation,
+setShowTrickCaptureAnimation] =
+useState(false);
+
+const [trickCaptureWinner,
+setTrickCaptureWinner] =
+useState(null);
+
+const [showRoundSummary,
+setShowRoundSummary] =
+useState(false);
+
+const [showMatchSummary,
+setShowMatchSummary] =
+useState(false);
+
+const [capturedTrickCount,
+setCapturedTrickCount] =
+useState(0);
+
+const [capturedTrickAnimationCount,
+setCapturedTrickAnimationCount] =
+useState(0);
+
+const [capturedDehlaAnimationCount,
+setCapturedDehlaAnimationCount] =
+useState(0);
 
     const [showAllCards, setShowAllCards] =
     useState(false);
@@ -354,6 +418,29 @@ function showMessage(text) {
         capturedB:
         [...capturedB],
 
+        uncapturedTricks:
+        [...uncapturedTricks],
+
+        capturedTrickCountA,
+
+        capturedTrickCountB,
+
+        showTrumpAnimation,
+
+trumpAnimationSuit,
+
+showDehlaAnimation,
+
+dehlaAnimationSuit,
+
+showTrickCaptureAnimation,
+
+trickCaptureWinner,
+
+capturedTrickAnimationCount,
+
+        capturedDehlaAnimationCount,
+
         currentRound,
 
 matchA,
@@ -462,9 +549,22 @@ trumpFixer;
     card.suit
 );
 
-showMessage(
-    `Trump fixed: ${card.suit}`
+setTrumpAnimationSuit(
+    card.suit
 );
+
+setShowTrumpAnimation(
+    true
+);
+
+setTimeout(() => {
+
+    setShowTrumpAnimation(
+        false
+    );
+
+}, 1800);
+
 
 localTrumpFixer =
 currentPlayer;
@@ -481,11 +581,21 @@ setTrumpFixer(
 
 ) {
 
-    showMessage(
+   setDehlaAnimationSuit(
+    card.suit
+);
 
-        `🔥 Dahla Played: ${card.suit}`
+setShowDehlaAnimation(
+    true
+);
 
+setTimeout(() => {
+
+    setShowDehlaAnimation(
+        false
     );
+
+}, 1800);
 
     setTableDahlas(
 
@@ -606,11 +716,21 @@ const winner =
 
 determineTrickWinner(
 
+    
+
     updatedCenter,
 
     activeTrump
 
 );
+
+const trickRecord = {
+
+    winner: winner.player,
+
+    cards: updatedCenter
+
+};
 
 
 
@@ -676,7 +796,13 @@ card.value === '10'
         let updatedTeamB =
         teamB;
 
+        const tricksCaptured =
+
+        uncapturedTricks.length + 1;
+
         // CAPTURE DEHLAS
+
+        
 
         if (
 
@@ -719,9 +845,15 @@ card.value === '10'
 
 );
 
-                showMessage(
-                `Team A captured ${newTableDahlas} Dahlas`
-                );
+setCapturedTrickCountA(
+
+    prev =>
+
+    prev + tricksCaptured
+
+);
+
+                
 
             } else {
 
@@ -744,14 +876,82 @@ card.value === '10'
 
 );
 
-                showMessage(
-                `Team B captured ${newTableDahlas} Dahlas`
-                );
+setCapturedTrickCountB(
+
+    prev =>
+
+    prev + tricksCaptured
+
+);
+
+                
             }
 
-            setTableDahlas(0);
+            setCapturedTrickAnimationCount(
+    tricksCaptured
+);
 
-            setTableDahlaSuits([]);
+setCapturedDehlaAnimationCount(
+    newTableDahlas
+);
+
+setTrickCaptureWinner(
+
+    isTeamA(
+        winner.player
+    )
+
+    ? 'A'
+
+    : 'B'
+
+);
+
+setShowTrickCaptureAnimation(
+    true
+);
+
+setTimeout(() => {
+
+    setShowTrickCaptureAnimation(
+        false
+    );
+
+}, 2200);
+
+           setTableDahlas(0);
+
+           setTableDahlaSuits([]);
+
+           setUncapturedTricks([]);
+        }
+
+        if (
+
+            !shouldCaptureDahlas({
+
+                consecutiveWins:
+                newConsecutiveWins,
+
+                tableDahlas:
+                newTableDahlas
+
+            })
+
+        ) {
+
+            setUncapturedTricks(
+
+                prev => [
+
+                    ...prev,
+
+                    trickRecord
+
+                ]
+
+            );
+
         }
 
        // FINAL TRICK
@@ -760,56 +960,102 @@ if (
 
     noCardsLeft
 
+    &&
+
+    !isRoundComplete({
+
+        teamA: updatedTeamA,
+
+        teamB: updatedTeamB
+
+    })
+
 ) {
 
-    let finalDahlas = 0;
+    const finalTricksCaptured =
+
+        uncapturedTricks.length + 1;
 
     if (
 
-        !shouldCaptureDahlas({
-
-            consecutiveWins:
-            newConsecutiveWins,
-
-            tableDahlas:
-            newTableDahlas
-
-        })
+        isTeamA(
+            winner.player
+        )
 
     ) {
 
-        finalDahlas =
+        updatedTeamA +=
         newTableDahlas;
 
-        if (
+        setTeamA(
+            updatedTeamA
+        );
 
-            isTeamA(
-                winner.player
-            )
+        setCapturedA(
 
-        ) {
+            prev => [
 
-            updatedTeamA +=
-            finalDahlas;
+                ...prev,
 
-            setTeamA(
-                updatedTeamA
-            );
+                ...newTableDahlaSuits
 
-        } else {
+            ]
 
-            updatedTeamB +=
-            finalDahlas;
+        );
 
-            setTeamB(
-                updatedTeamB
-            );
-        }
+        setCapturedTrickCountA(
+
+            prev =>
+
+            prev + finalTricksCaptured
+
+        );
+
+    }
+
+    else {
+
+        updatedTeamB +=
+        newTableDahlas;
+
+        setTeamB(
+            updatedTeamB
+        );
+
+        setCapturedB(
+
+            prev => [
+
+                ...prev,
+
+                ...newTableDahlaSuits
+
+            ]
+
+        );
+
+        setCapturedTrickCountB(
+
+            prev =>
+
+            prev + finalTricksCaptured
+
+        );
+
     }
 
     setTableDahlas(0);
 
     setTableDahlaSuits([]);
+
+    setUncapturedTricks([]);
+
+    showMessage(
+
+        `Final trick captures ${newTableDahlas} remaining Dahlas`
+
+    );
+
 }
 
         // ROUND COMPLETE
@@ -827,18 +1073,143 @@ if (
             })
 
         ) {
+let roundPointsA = 0;
 
-            const roundPointsA =
+let roundPointsB = 0;
 
-            calculateRoundPoints(
-                updatedTeamA
-            );
+if (
 
-            const roundPointsB =
+    updatedTeamA >
 
-            calculateRoundPoints(
-                updatedTeamB
-            );
+    updatedTeamB
+
+) {
+
+    roundPointsA = 1;
+
+}
+
+else if (
+
+    updatedTeamB >
+
+    updatedTeamA
+
+) {
+
+    roundPointsB = 1;
+
+}
+
+else {
+
+    let tricksA =
+        capturedTrickCountA;
+
+    let tricksB =
+        capturedTrickCountB;
+
+    // Current trick batch not yet reflected in state
+
+    if (
+
+        shouldCaptureDahlas({
+
+            consecutiveWins:
+            newConsecutiveWins,
+
+            tableDahlas:
+            newTableDahlas
+
+        })
+
+    ) {
+
+        if (
+
+            isTeamA(
+                winner.player
+            )
+
+        ) {
+
+            tricksA +=
+            tricksCaptured;
+
+        }
+
+        else {
+
+            tricksB +=
+            tricksCaptured;
+
+        }
+
+    }
+
+    // Final trick capture path
+
+    else if (
+
+        noCardsLeft
+
+    ) {
+
+        if (
+
+            isTeamA(
+                winner.player
+            )
+
+        ) {
+
+            tricksA +=
+            uncapturedTricks.length + 1;
+
+        }
+
+        else {
+
+            tricksB +=
+            uncapturedTricks.length + 1;
+
+        }
+
+    }
+
+    if (
+
+        tricksA >
+
+        tricksB
+
+    ) {
+
+        roundPointsA = 1;
+
+    }
+
+    else if (
+
+        tricksB >
+
+        tricksA
+
+    ) {
+
+        roundPointsB = 1;
+
+    }
+
+    else {
+
+        roundPointsA = 0.5;
+
+        roundPointsB = 0.5;
+
+    }
+
+}
 
             setMatchA(
                 matchA + roundPointsA
@@ -853,7 +1224,7 @@ matchA + roundPointsA;
 const updatedMatchB =
 matchB + roundPointsB;
 
-setHistory([]);
+
 
 
 
@@ -939,6 +1310,8 @@ setTimeout(() => {
 
     function startNextRound(starter) {
 
+        
+
         const shuffledDeck =
         createDeck();
 
@@ -968,6 +1341,12 @@ newPlayers.map(
 
         setCapturedA([]);
 setCapturedB([]);
+
+setUncapturedTricks([]);
+
+setCapturedTrickCountA(0);
+
+setCapturedTrickCountB(0);
 
         resetRoundState({
 
@@ -1024,6 +1403,12 @@ setCapturedB([]);
         setMatchWinner
 
     });
+
+    setUncapturedTricks([]);
+
+setCapturedTrickCountA(0);
+
+setCapturedTrickCountB(0);
 
     startNextRound(0);
 }
@@ -1085,6 +1470,50 @@ function undoMove() {
 
     setCapturedB(
     previous.capturedB
+    );
+
+    setUncapturedTricks(
+    previous.uncapturedTricks
+    );
+
+    setCapturedTrickCountA(
+    previous.capturedTrickCountA
+    );
+
+    setCapturedTrickCountB(
+    previous.capturedTrickCountB
+    );
+
+    setShowTrumpAnimation(
+    previous.showTrumpAnimation
+);
+
+setTrumpAnimationSuit(
+    previous.trumpAnimationSuit
+);
+
+setShowDehlaAnimation(
+    previous.showDehlaAnimation
+);
+
+setDehlaAnimationSuit(
+    previous.dehlaAnimationSuit
+);
+
+setShowTrickCaptureAnimation(
+    previous.showTrickCaptureAnimation
+);
+
+setTrickCaptureWinner(
+    previous.trickCaptureWinner
+);
+
+setCapturedTrickAnimationCount(
+    previous.capturedTrickAnimationCount
+);
+
+    setCapturedDehlaAnimationCount(
+    previous.capturedDehlaAnimationCount
     );
 
     setLastWinner(
@@ -1159,6 +1588,42 @@ text-white
     message={message}
 />
 
+<TrumpAnimation
+
+    show={showTrumpAnimation}
+
+    suit={trumpAnimationSuit}
+
+/>
+
+<DehlaAnimation
+
+    show={showDehlaAnimation}
+
+    suit={dehlaAnimationSuit}
+
+/>
+
+<TrickCaptureAnimation
+
+    show={
+        showTrickCaptureAnimation
+    }
+
+    winner={
+        trickCaptureWinner
+    }
+
+    trickCount={
+        capturedTrickAnimationCount
+    }
+
+    dehlaCount={
+        capturedDehlaAnimationCount
+    }
+
+/>
+
 <div
 className="
 absolute
@@ -1179,6 +1644,8 @@ z-30
   capturedA={capturedA}
   capturedB={capturedB}
   tableDahlaSuits={tableDahlaSuits}
+  capturedTrickCountA={capturedTrickCountA}
+  capturedTrickCountB={capturedTrickCountB}
 />
 </div>
 

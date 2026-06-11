@@ -9,7 +9,8 @@ export function resetRoundState({
     setConsecutiveWins,
     setTrumpFixer,
     setTeamA,
-    setTeamB
+    setTeamB,
+    
 
 }) {
 

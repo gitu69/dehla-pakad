@@ -7,7 +7,9 @@ export default function ScoreBoard({
   trumpSuit,
   tableDahlaSuits,
   capturedA,
-  capturedB
+  capturedB,
+  capturedTrickCountA,
+  capturedTrickCountB
 }) {
 
   function suitIcon(suit) {
@@ -131,7 +133,7 @@ export default function ScoreBoard({
             md:text-sm
             "
           >
-            Team A
+            Team A ({capturedTrickCountA})
           </span>
 
           <div
@@ -203,7 +205,7 @@ export default function ScoreBoard({
             md:text-sm
             "
           >
-            Team B
+            Team B ({capturedTrickCountB})
           </span>
 
           <div
