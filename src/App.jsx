@@ -82,7 +82,7 @@ import DehlaAnimation
 from './components/DehlaAnimation';
 
 import TrickCaptureAnimation
-from './components/trickCaptureAnimation';
+from './components/TrickCaptureAnimation';
 
 import UndoButton
 from './components/UndoButton';
