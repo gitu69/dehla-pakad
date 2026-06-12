@@ -47,18 +47,22 @@ export default function DehlaAnimation({
 
                         exit="exit"
 
-                        className="
-                        fixed
-                        inset-0
+                       className="
+fixed
+inset-0
 
-                        flex
-                        items-center
-                        justify-center
+flex
+items-center
+justify-center
 
-                        z-[200]
+translate-y-20
+sm:translate-y-24
+md:translate-y-28
 
-                        pointer-events-none
-                        "
+z-[205]
+
+pointer-events-none
+"
 
                     >
 

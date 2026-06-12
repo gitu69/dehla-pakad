@@ -84,6 +84,9 @@ from './components/DehlaAnimation';
 import TrickCaptureAnimation
 from './components/TrickCaptureAnimation';
 
+import RoundSummaryModal
+from './components/RoundSummaryModal';
+
 import UndoButton
 from './components/UndoButton';
 
@@ -199,6 +202,18 @@ useState(null);
 const [showRoundSummary,
 setShowRoundSummary] =
 useState(false);
+
+const [roundHistory,
+setRoundHistory] =
+useState([]);
+
+const [roundCountdown,
+setRoundCountdown] =
+useState(8);
+
+const [pendingRoundStart,
+setPendingRoundStart] =
+useState(null);
 
 const [showMatchSummary,
 setShowMatchSummary] =
@@ -363,6 +378,104 @@ players[currentPlayer]
 
 ]);
 
+useEffect(() => {
+
+    if (
+
+        pendingRoundStart === null
+
+    ) {
+
+        return;
+
+    }
+
+    if (
+
+        roundCountdown <= 0
+
+    ) {
+
+        if (
+
+            completeMatch({
+
+                currentRound,
+
+                updatedMatchA:
+                pendingRoundStart.matchA,
+
+                updatedMatchB:
+                pendingRoundStart.matchB,
+
+                setMatchWinner,
+
+                setMatchOver,
+
+                showMessage
+
+            })
+
+        ) {
+
+            setPendingRoundStart(
+                null
+            );
+
+            return;
+        }
+
+        setShowRoundSummary(
+            false
+        );
+
+        setRoundCountdown(8);
+
+        setCurrentRound(
+
+            prev => prev + 1
+
+        );
+
+        startNextRound(
+
+            pendingRoundStart.winner
+
+        );
+
+        setPendingRoundStart(
+            null
+        );
+
+        return;
+    }
+
+    const timer =
+
+    setTimeout(() => {
+
+        setRoundCountdown(
+
+            prev => prev - 1
+
+        );
+
+    }, 1000);
+
+    return () =>
+
+        clearTimeout(
+            timer
+        );
+
+}, [
+
+    roundCountdown,
+
+    pendingRoundStart
+
+]);
+
 function showMessage(text) {
 
     setMessage(text);
@@ -435,6 +548,15 @@ matchOver,
 
 matchWinner,
 
+showRoundSummary,
+
+roundCountdown,
+
+pendingRoundStart,
+
+roundHistory:
+[...roundHistory],
+
         deck:
         [...deck]
 
@@ -450,6 +572,8 @@ matchWinner,
 
     let localTrumpFixer =
 trumpFixer;
+
+let trumpWasFixed = false;
 
     if (!card) {
 
@@ -537,6 +661,10 @@ setTrumpAnimationSuit(
     card.suit
 );
 
+setShowDehlaAnimation(
+    false
+);
+
 setShowTrumpAnimation(
     true
 );
@@ -556,30 +684,40 @@ currentPlayer;
 setTrumpFixer(
     currentPlayer
 );
+
+trumpWasFixed = true;
         }
     }
 
-    if (
+   if (
 
     card.value === '10'
 
 ) {
 
-   setDehlaAnimationSuit(
-    card.suit
-);
+    if (
 
-setShowDehlaAnimation(
-    true
-);
+        !trumpWasFixed
 
-setTimeout(() => {
+    ) {
 
-    setShowDehlaAnimation(
-        false
-    );
+        setDehlaAnimationSuit(
+            card.suit
+        );
 
-}, 1800);
+        setShowDehlaAnimation(
+            true
+        );
+
+        setTimeout(() => {
+
+            setShowDehlaAnimation(
+                false
+            );
+
+        }, 1800);
+
+    }
 
     setTableDahlas(
 
@@ -870,6 +1008,14 @@ setCapturedTrickCountB(
 
                 
             }
+
+            setShowDehlaAnimation(
+    false
+);
+
+setShowTrumpAnimation(
+    false
+);
 
             setCapturedTrickAnimationCount(
     tricksCaptured
@@ -1208,50 +1354,157 @@ matchA + roundPointsA;
 const updatedMatchB =
 matchB + roundPointsB;
 
-setHistory([]);
+let finalTricksA =
+capturedTrickCountA;
 
+let finalTricksB =
+capturedTrickCountB;
 
+if (
 
-setTimeout(() => {
+    shouldCaptureDahlas({
 
-    // MATCH COMPLETE
+        consecutiveWins:
+        newConsecutiveWins,
 
-   if (
-
-    completeMatch({
-
-        currentRound,
-
-        updatedMatchA,
-
-        updatedMatchB,
-
-        setMatchWinner,
-
-        setMatchOver,
-        
-        showMessage
+        tableDahlas:
+        newTableDahlas
 
     })
 
 ) {
 
-    return;
+    if (
+
+        isTeamA(
+            winner.player
+        )
+
+    ) {
+
+        finalTricksA +=
+        tricksCaptured;
+
+    }
+
+    else {
+
+        finalTricksB +=
+        tricksCaptured;
+
+    }
+
 }
 
-    showMessage(
-        'Round Complete!'
-    );
+else if (
 
-    setCurrentRound(
-        prev => prev + 1
-    );
+    noCardsLeft
 
-    startNextRound(
-        winner.player
-    );
+) {
 
-}, 500);
+    if (
+
+        isTeamA(
+            winner.player
+        )
+
+    ) {
+
+        finalTricksA +=
+        uncapturedTricks.length + 1;
+
+    }
+
+    else {
+
+        finalTricksB +=
+        uncapturedTricks.length + 1;
+
+    }
+
+}
+
+setRoundHistory(
+
+    prev => {
+
+        const withoutCurrentRound =
+
+        prev.filter(
+
+            item =>
+
+            item.round !== currentRound
+
+        );
+
+        return [
+
+            ...withoutCurrentRound,
+
+            {
+
+                round:
+                currentRound,
+
+                teamADahlas:
+                updatedTeamA,
+
+                teamBDahlas:
+                updatedTeamB,
+
+                teamATricks:
+                finalTricksA,
+
+                teamBTricks:
+                finalTricksB,
+
+                pointsA:
+                roundPointsA,
+
+                pointsB:
+                roundPointsB
+
+            }
+
+        ];
+
+    }
+
+);
+
+setShowDehlaAnimation(
+    false
+);
+
+setShowTrumpAnimation(
+    false
+);
+
+setShowTrickCaptureAnimation(
+    false
+);
+
+setRoundCountdown(8);
+
+setPendingRoundStart({
+
+    winner:
+    winner.player,
+
+    matchA:
+    updatedMatchA,
+
+    matchB:
+    updatedMatchB
+
+});
+
+setShowRoundSummary(
+    true
+);
+
+return;
             return;
         }
 
@@ -1392,6 +1645,8 @@ setCapturedTrickCountA(0);
 
 setCapturedTrickCountB(0);
 
+setRoundHistory([]);
+
     startNextRound(0);
 }
 
@@ -1502,6 +1757,34 @@ setMatchWinner(
     previous.matchWinner
 );
 
+setShowRoundSummary(
+    previous.showRoundSummary
+);
+
+setRoundCountdown(
+    previous.roundCountdown
+);
+
+setPendingRoundStart(
+    previous.pendingRoundStart
+);
+
+setRoundHistory(
+    previous.roundHistory
+);
+
+if (
+
+    previous.showRoundSummary !== true
+
+) {
+
+    setPendingRoundStart(
+        null
+    );
+
+}
+
     setHistory(
 
         history.slice(
@@ -1571,6 +1854,38 @@ text-white
     dehlaCount={
         capturedDehlaAnimationCount
     }
+
+/>
+
+<RoundSummaryModal
+
+    show={
+        showRoundSummary
+    }
+
+    roundHistory={
+        roundHistory
+    }
+
+    matchA={
+        matchA
+    }
+
+    matchB={
+        matchB
+    }
+
+    countdown={
+        roundCountdown
+    }
+
+    onContinue={() => {
+
+        setShowRoundSummary(
+            false
+        );
+
+    }}
 
 />
 

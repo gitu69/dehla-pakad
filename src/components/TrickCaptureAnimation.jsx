@@ -34,17 +34,21 @@ export default function TrickCaptureAnimation({
                         exit="exit"
 
                         className="
-                        fixed
-                        inset-0
+fixed
+inset-0
 
-                        flex
-                        items-center
-                        justify-center
+flex
+items-center
+justify-center
 
-                        pointer-events-none
+translate-y-40
+sm:translate-y-44
+md:translate-y-48
 
-                        z-[210]
-                        "
+pointer-events-none
+
+z-[210]
+"
 
                     >
 
