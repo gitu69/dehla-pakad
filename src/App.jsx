@@ -7,12 +7,7 @@ from './game/deck';
 import { determineTrickWinner }
 from './game/trick';
 
-import {
 
-    calculateRoundPoints
-
-}
-from './game/scoring';
 
 import {
 
@@ -35,11 +30,7 @@ import {
 }
 from './game/engine';
 
-import Card
-from './components/Card';
 
-import GameInfo
-from './components/GameInfo';
 
 import PlayerHand
 from './components/PlayerHand';
@@ -69,8 +60,15 @@ from './game/ai';
 import { completeMatch }
 from './game/matchComplete';
 
-import Message
-from './components/Message';
+import {
+
+    hasAllFourDahlas
+
+}
+
+from './game/allDahlas';
+
+
 
 import ScoreBoard
 from './components/ScoreBoard';
@@ -218,13 +216,9 @@ const [pendingRoundStart,
 setPendingRoundStart] =
 useState(null);
 
-const [showMatchSummary,
-setShowMatchSummary] =
-useState(false);
 
-const [capturedTrickCount,
-setCapturedTrickCount] =
-useState(0);
+
+
 
 const [capturedTrickAnimationCount,
 setCapturedTrickAnimationCount] =
@@ -236,6 +230,9 @@ useState(0);
 
 const [notification, setNotification] =
 useState('');
+
+const [dealStage, setDealStage] =
+useState(0);
 
     const [showAllCards, setShowAllCards] =
     useState(false);
@@ -395,6 +392,8 @@ useEffect(() => {
 
     }
 
+    
+
     if (
 
         roundCountdown <= 0
@@ -525,8 +524,12 @@ pendingRoundStart,
 roundHistory:
 [...roundHistory],
 
-        deck:
-        [...deck]
+dealStage,
+
+notification,
+
+deck:
+[...deck]
 
     }
 
@@ -758,16 +761,20 @@ trumpWasFixed = true;
 
     deck.length > 0
 
-) {
+) 
+
+
+
+{
 
             const result =
 
-            dealRemainingCards(
+dealRemainingCards(
 
-                updatedPlayers,
-                deck
+    updatedPlayers,
+    deck
 
-            );
+);
 
              result.players =
 
@@ -781,9 +788,34 @@ trumpWasFixed = true;
                 result.players
             );
 
+            
+
+            const allDahlasWinner =
+
+getAllDahlasWinner(
+    result.players
+);
+
+
+
+
+if (
+
+    allDahlasWinner !== -1
+
+) {
+
+    processAllDahlasWin(
+        allDahlasWinner
+    );
+
+    return;
+}
+
             setDeck(
                 result.deck
             );
+            setDealStage(2);
         }
 
        
@@ -837,6 +869,242 @@ const trickRecord = {
         areHandsEmpty(
             updatedPlayers
         );
+
+        if (
+
+    noCardsLeft
+
+    &&
+
+    !trumpSuit
+
+    &&
+
+    localTrumpFixer === null
+
+) {
+
+    // FIRST 5 CARDS COMPLETE
+
+    if (
+
+        dealStage === 0
+
+    ) {
+
+        const updatedPlayersCopy =
+
+        updatedPlayers.map(
+            hand => [...hand]
+        );
+
+        const updatedDeckCopy =
+        [...deck];
+
+        for (
+
+            let i = 0;
+
+            i < 5;
+
+            i++
+
+        ) {
+
+            for (
+
+                let p = 0;
+
+                p < 4;
+
+                p++
+
+            ) {
+
+                updatedPlayersCopy[p]
+                .push(
+
+                    updatedDeckCopy.pop()
+
+                );
+
+            }
+
+        }
+
+        const sortedPlayers =
+
+updatedPlayersCopy.map(
+
+    hand => sortHand(hand)
+
+);
+
+setPlayers(
+    sortedPlayers
+);
+
+const allDahlasWinner =
+
+getAllDahlasWinner(
+    sortedPlayers
+);
+
+if (
+
+    allDahlasWinner !== -1
+
+) {
+
+    processAllDahlasWin(
+        allDahlasWinner
+    );
+
+    return;
+}
+
+        setDeck(
+            updatedDeckCopy
+        );
+
+        setDealStage(1);
+
+        setNotification(
+            'No Trump Fixed • +5 Cards'
+        );
+
+        setTimeout(() => {
+
+            setNotification('');
+
+        }, 2200);
+
+        setTimeout(() => {
+
+            setCenterCards([]);
+
+            setLeadSuit(null);
+
+            setCurrentPlayer(
+                winner.player
+            );
+
+        }, 1000);
+
+        return;
+    }
+
+    // SECOND 5 CARDS COMPLETE
+
+    if (
+
+        dealStage === 1
+
+    ) {
+
+        const updatedPlayersCopy =
+
+        updatedPlayers.map(
+            hand => [...hand]
+        );
+
+        const updatedDeckCopy =
+        [...deck];
+
+        for (
+
+            let i = 0;
+
+            i < 3;
+
+            i++
+
+        ) {
+
+            for (
+
+                let p = 0;
+
+                p < 4;
+
+                p++
+
+            ) {
+
+                updatedPlayersCopy[p]
+                .push(
+
+                    updatedDeckCopy.pop()
+
+                );
+
+            }
+
+        }
+
+        const sortedPlayers =
+
+updatedPlayersCopy.map(
+
+    hand => sortHand(hand)
+
+);
+
+setPlayers(
+    sortedPlayers
+);
+
+const allDahlasWinner =
+
+getAllDahlasWinner(
+    sortedPlayers
+);
+
+if (
+
+    allDahlasWinner !== -1
+
+) {
+
+    processAllDahlasWin(
+        allDahlasWinner
+    );
+
+    return;
+}
+
+        setDeck(
+            updatedDeckCopy
+        );
+
+        setDealStage(2);
+
+        setNotification(
+            'Still No Trump • Final 3 Cards'
+        );
+
+        setTimeout(() => {
+
+            setNotification('');
+
+        }, 2200);
+
+        setTimeout(() => {
+
+            setCenterCards([]);
+
+            setLeadSuit(null);
+
+            setCurrentPlayer(
+                winner.player
+            );
+
+        }, 1000);
+
+        return;
+    }
+
+}
 
       const newTableDahlas =
 
@@ -1324,6 +1592,51 @@ matchA + roundPointsA;
 const updatedMatchB =
 matchB + roundPointsB;
 
+let roundWinnerMessage = '';
+
+if (
+
+    roundPointsA >
+
+    roundPointsB
+
+) {
+
+    roundWinnerMessage =
+    '🏆 Team A Wins Round';
+
+}
+
+else if (
+
+    roundPointsB >
+
+    roundPointsA
+
+) {
+
+    roundWinnerMessage =
+    '🏆 Team B Wins Round';
+
+}
+
+else {
+
+    roundWinnerMessage =
+    '🤝 Round Drawn';
+
+}
+
+setNotification(
+    roundWinnerMessage
+);
+
+setTimeout(() => {
+
+    setNotification('');
+
+}, 2500);
+
 let finalTricksA =
 capturedTrickCountA;
 
@@ -1469,14 +1782,17 @@ if (
 
         setMatchOver,
 
-        
     })
 
 ) {
 
-    setShowRoundSummary(
-        true
-    );
+    setTimeout(() => {
+
+        setShowRoundSummary(
+            true
+        );
+
+    }, 2500);
 
     return;
 }
@@ -1496,12 +1812,16 @@ setPendingRoundStart({
 
 });
 
-setShowRoundSummary(
-    true
-);
+setTimeout(() => {
+
+    setShowRoundSummary(
+        true
+    );
+
+}, 2500);
 
 return;
-            return;
+            
         }
 
         // NEXT TRICK
@@ -1541,6 +1861,165 @@ return;
 
     // START NEXT ROUND
 
+   
+
+function getAllDahlasWinner(
+
+    hands
+
+) {
+
+    return hands.findIndex(
+
+        hand =>
+
+        hasAllFourDahlas(
+            hand
+        )
+
+    );
+
+}
+
+function processAllDahlasWin(
+
+    winnerPlayer
+
+) {
+
+    const teamAWin =
+
+        winnerPlayer === 0
+
+        ||
+
+        winnerPlayer === 2;
+
+    const updatedMatchA =
+
+        matchA +
+
+        (teamAWin ? 1 : 0);
+
+    const updatedMatchB =
+
+        matchB +
+
+        (teamAWin ? 0 : 1);
+
+    setTeamA(
+        teamAWin ? 4 : 0
+    );
+
+    setTeamB(
+        teamAWin ? 0 : 4
+    );
+
+    setMatchA(
+        updatedMatchA
+    );
+
+    setMatchB(
+        updatedMatchB
+    );
+
+    setRoundHistory(
+
+        prev => [
+
+            ...prev,
+
+            {
+
+                round:
+                currentRound,
+
+                teamADahlas:
+                teamAWin ? 4 : 0,
+
+                teamBDahlas:
+                teamAWin ? 0 : 4,
+
+                teamATricks: 0,
+
+                teamBTricks: 0,
+
+                pointsA:
+                teamAWin ? 1 : 0,
+
+                pointsB:
+                teamAWin ? 0 : 1
+
+            }
+
+        ]
+
+    );
+
+    setNotification(
+
+        winnerPlayer === 0
+
+        ? '🏆 You Have All 4 Dahlas'
+
+        : `🏆 Player ${winnerPlayer + 1} Has All 4 Dahlas`
+
+    );
+
+    setTimeout(() => {
+
+        setNotification('');
+
+    }, 2500);
+
+    if (
+
+    completeMatch({
+
+        currentRound,
+
+        updatedMatchA,
+
+        updatedMatchB,
+
+        setMatchWinner,
+
+        setMatchOver
+
+    })
+
+) {
+
+    setTimeout(() => {
+
+        setShowRoundSummary(
+            true
+        );
+
+    }, 2500);
+
+    return;
+}
+
+    setRoundCountdown(8);
+
+setPendingRoundStart({
+
+    winner:
+    winnerPlayer
+
+});
+
+setTimeout(() => {
+
+    setShowRoundSummary(
+        true
+    );
+
+}, 2500);
+
+}
+
     function startNextRound(starter) {
 
         const shuffledDeck =
@@ -1560,15 +2039,18 @@ newPlayers.map(
 
 );
 
-      // RESET ROUND STATES
 
-        setPlayers(
-            newPlayers
-        );
+setPlayers(
+    newPlayers
+);
 
-        setDeck(
-            shuffledDeck
-        );
+setDeck(
+    shuffledDeck
+);
+
+// RESET ROUND STATES
+
+        
 
         setCapturedA([]);
 setCapturedB([]);
@@ -1578,6 +2060,8 @@ setUncapturedTricks([]);
 setCapturedTrickCountA(0);
 
 setCapturedTrickCountB(0);
+
+setDealStage(0);
 
         resetRoundState({
 
@@ -1602,6 +2086,31 @@ setCapturedTrickCountB(0);
     setTeamB
 
 });
+
+const allDahlasWinner =
+
+getAllDahlasWinner(
+    newPlayers
+);
+
+if (
+
+    allDahlasWinner !== -1
+
+) {
+
+    setTimeout(() => {
+
+        processAllDahlasWin(
+            allDahlasWinner
+        );
+
+    }, 100);
+
+    return;
+}
+
+      
         // ROUND STARTER
 
       setCurrentPlayer(
@@ -1654,6 +2163,9 @@ setPendingRoundStart(
 setRoundCountdown(
     8
 );
+setDealStage(0);
+
+setNotification('');
 
 startNextRound(0);
 }
@@ -1779,6 +2291,14 @@ setPendingRoundStart(
 
 setRoundHistory(
     previous.roundHistory
+);
+
+setDealStage(
+    previous.dealStage
+);
+
+setNotification(
+    previous.notification || ''
 );
 
 
