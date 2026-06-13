@@ -87,6 +87,9 @@ from './components/TrickCaptureAnimation';
 import RoundSummaryModal
 from './components/RoundSummaryModal';
 
+import CenterNotification
+from './components/CenterNotification';
+
 import UndoButton
 from './components/UndoButton';
 
@@ -231,14 +234,16 @@ const [capturedDehlaAnimationCount,
 setCapturedDehlaAnimationCount] =
 useState(0);
 
+const [notification, setNotification] =
+useState('');
+
     const [showAllCards, setShowAllCards] =
     useState(false);
 
     const [aiEnabled, setAiEnabled] =
 useState(true);
 
-    const [message, setMessage] =
-    useState('');
+    
 
 
    
@@ -396,34 +401,7 @@ useEffect(() => {
 
     ) {
 
-        if (
-
-            completeMatch({
-
-                currentRound,
-
-                updatedMatchA:
-                pendingRoundStart.matchA,
-
-                updatedMatchB:
-                pendingRoundStart.matchB,
-
-                setMatchWinner,
-
-                setMatchOver,
-
-                showMessage
-
-            })
-
-        ) {
-
-            setPendingRoundStart(
-                null
-            );
-
-            return;
-        }
+        
 
         setShowRoundSummary(
             false
@@ -476,17 +454,7 @@ useEffect(() => {
 
 ]);
 
-function showMessage(text) {
 
-    setMessage(text);
-
-    setTimeout(() => {
-
-        setMessage('');
-
-    }, 2000);
-
-}
 
    function playCard(index) {
 
@@ -605,9 +573,15 @@ let trumpWasFixed = false;
 
         ) {
 
-           showMessage(
-           'Must follow suit'
-           );
+          setNotification(
+    'Must Follow Suit'
+);
+
+setTimeout(() => {
+
+    setNotification('');
+
+}, 1800);
 
             return;
         }
@@ -1180,11 +1154,7 @@ if (
 
     setUncapturedTricks([]);
 
-    showMessage(
-
-        `Final trick captures ${newTableDahlas} remaining Dahlas`
-
-    );
+   
 
 }
 
@@ -1485,6 +1455,32 @@ setShowTrickCaptureAnimation(
     false
 );
 
+if (
+
+    completeMatch({
+
+        currentRound,
+
+        updatedMatchA,
+
+        updatedMatchB,
+
+        setMatchWinner,
+
+        setMatchOver,
+
+        
+    })
+
+) {
+
+    setShowRoundSummary(
+        true
+    );
+
+    return;
+}
+
 setRoundCountdown(8);
 
 setPendingRoundStart({
@@ -1647,7 +1643,19 @@ setCapturedTrickCountB(0);
 
 setRoundHistory([]);
 
-    startNextRound(0);
+setShowRoundSummary(
+    false
+);
+
+setPendingRoundStart(
+    null
+);
+
+setRoundCountdown(
+    8
+);
+
+startNextRound(0);
 }
 
 function undoMove() {
@@ -1773,17 +1781,7 @@ setRoundHistory(
     previous.roundHistory
 );
 
-if (
 
-    previous.showRoundSummary !== true
-
-) {
-
-    setPendingRoundStart(
-        null
-    );
-
-}
 
     setHistory(
 
@@ -1812,14 +1810,21 @@ text-white
 "
 >
 
+    <CenterNotification
+
+    show={
+        notification !== ''
+    }
+
+    text={
+        notification
+    }
+
+/>
+
             
 
           
-
-
-<Message
-    message={message}
-/>
 
 <TrumpAnimation
 
@@ -1886,6 +1891,14 @@ text-white
         );
 
     }}
+
+    isMatchComplete={
+        matchOver
+    }
+
+    onNewMatch={
+        resetMatch
+    }
 
 />
 

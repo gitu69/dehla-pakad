@@ -52,16 +52,15 @@ export default function PlayerHand({
                             transition-all
                             duration-200
 
-                            ${
-                                playerNumber === 0 &&
-                                currentPlayer === 0 &&
-                                leadSuit &&
-                                isLegalCard
+                           ${
+    playerNumber === 0 &&
+    currentPlayer === 0 &&
+    isLegalCard
 
-                                    ? "scale-110 -translate-y-2"
+        ? "scale-110 -translate-y-2"
 
-                                    : ""
-                            }
+        : ""
+}
                         `}
 
                         style={

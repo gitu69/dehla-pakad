@@ -11,7 +11,6 @@ export function completeMatch({
     updatedMatchB,
     setMatchWinner,
     setMatchOver,
-    showMessage
 
 }) {
 
@@ -42,15 +41,7 @@ export function completeMatch({
         true
     );
 
-    showMessage(
-
-    winnerName === 'Draw'
-
-    ? 'Match Draw!'
-
-    : `🏆 ${winnerName} Wins Match!`
-
-);
+    
 
     return true;
 }
