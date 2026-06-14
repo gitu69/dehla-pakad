@@ -6,6 +6,11 @@ from 'react';
 import { determineTrickWinner }
 from './game/trick';
 
+import {
+    handleTrumpFix
+}
+from './game/trumpFix';
+
 
 
 import {
@@ -24,7 +29,6 @@ from './game/followSuit';
 
 import {
 
-    shouldFixTrump,
     shouldCaptureDahlas,
     getConsecutiveWins,
     isTeamA,
@@ -695,70 +699,53 @@ let trumpWasFixed = false;
 
     // FIX TRUMP
 
-    else if (
+    else {
 
-        !trumpSuit
+    const trumpResult =
+
+    handleTrumpFix({
+
+        trumpSuit,
+
+        leadSuit,
+
+        currentPlayer,
+
+        centerCards,
+
+        hand:
+        updatedPlayers[currentPlayer],
+
+        card,
+
+        setTrumpSuit,
+
+        setTrumpAnimationSuit,
+
+        setShowTrumpAnimation,
+
+        setShowDehlaAnimation,
+
+        setTrumpFixer
+
+    });
+
+    if (
+
+        trumpResult.localTrumpFixer !== null
 
     ) {
 
-        const trickLeader =
+        localTrumpFixer =
 
-        centerCards[0]?.player;
-
-        if (
-
-            shouldFixTrump({
-
-                leadSuit,
-
-                trumpSuit,
-
-                currentPlayer,
-
-                trickLeader,
-
-                hand:
-                updatedPlayers[currentPlayer]
-
-            })
-
-        ) {
-
-           setTrumpSuit(
-    card.suit
-);
-
-setTrumpAnimationSuit(
-    card.suit
-);
-
-setShowDehlaAnimation(
-    false
-);
-
-setShowTrumpAnimation(
-    true
-);
-
-setTimeout(() => {
-
-    setShowTrumpAnimation(
-        false
-    );
-
-}, 1800);
-
-
-localTrumpFixer =
-currentPlayer;
-
-setTrumpFixer(
-    currentPlayer
-);
-
-trumpWasFixed = true;
-        }
+        trumpResult.localTrumpFixer;
     }
+
+    trumpWasFixed =
+
+    trumpResult.trumpWasFixed;
+
+}
 
    if (
 
