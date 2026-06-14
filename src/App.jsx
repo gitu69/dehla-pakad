@@ -18,6 +18,11 @@ import {
 from './game/round';
 
 import {
+    validateFollowSuit
+}
+from './game/followSuit';
+
+import {
 
     shouldFixTrump,
     shouldCaptureDahlas,
@@ -38,9 +43,6 @@ from './components/PlayerAvatar';
 
 import Table
 from './components/Table';
-
-import { resetMatchState }
-from './game/match';
 
 
 import { chooseAICard }
@@ -66,6 +68,11 @@ import {
     startNextRound
 }
 from './game/roundManager';
+
+import {
+    resetMatch
+}
+from './game/resetManager';
 
 import ScoreBoard
 from './components/ScoreBoard';
@@ -657,42 +664,25 @@ let trumpWasFixed = false;
 
     // FOLLOW SUIT
 
-    if (leadSuit) {
+   if (
 
-        const hasLeadSuit =
+    !validateFollowSuit({
 
-        updatedPlayers[currentPlayer]
-        .some(
+        leadSuit,
 
-            c =>
+        hand:
+        updatedPlayers[currentPlayer],
 
-            c.suit === leadSuit
+        card,
 
-        );
+        setNotification
 
-        if (
+    })
 
-            hasLeadSuit
+) {
 
-            &&
-
-            card.suit !== leadSuit
-
-        ) {
-
-          setNotification(
-    'Must Follow Suit'
-);
-
-setTimeout(() => {
-
-    setNotification('');
-
-}, 1800);
-
-            return;
-        }
-    }
+    return;
+}
 
     // SET LEAD SUIT
 
@@ -2046,116 +2036,6 @@ return;
 
     // START NEXT ROUND
 
-   
-
-  function resetMatch() {
-
-    resetMatchState({
-
-        setCurrentRound,
-
-        setMatchA,
-
-        setMatchB,
-
-        setTeamA,
-
-        setTeamB,
-
-        setTableDahlas,
-
-        setTrumpSuit,
-
-        setLeadSuit,
-
-        setMatchOver,
-
-        setMatchWinner
-
-    });
-
-    setUncapturedTricks([]);
-
-setCapturedTrickCountA(0);
-
-setCapturedTrickCountB(0);
-
-setRoundHistory([]);
-
-setShowRoundSummary(
-    false
-);
-
-setPendingRoundStart(
-    null
-);
-
-setRoundCountdown(
-    8
-);
-setDealStage(0);
-
-setNotification('');
-
-startNextRound({
-
-    starter: 0,
-
-    setPlayers,
-    setDeck,
-
-    setCapturedA,
-    setCapturedB,
-
-    setUncapturedTricks,
-
-    setCapturedTrickCountA,
-    setCapturedTrickCountB,
-
-    setDealStage,
-
-    setCenterCards,
-    setLeadSuit,
-    setTrumpSuit,
-
-    setTableDahlas,
-    setTableDahlaSuits,
-
-    setLastWinner,
-    setConsecutiveWins,
-
-    setTrumpFixer,
-
-    setTeamA,
-    setTeamB,
-
-    currentRound,
-
-    matchA,
-    matchB,
-
-    setMatchA,
-    setMatchB,
-
-    setRoundHistory,
-
-    setNotification,
-
-    setMatchWinner,
-    setMatchOver,
-
-    setRoundCountdown,
-
-    setPendingRoundStart,
-
-    setShowRoundSummary,
-
-    setCurrentPlayer
-
-});
-}
-
-
 
   
 
@@ -2260,9 +2140,68 @@ text-white
         matchOver
     }
 
-    onNewMatch={
-        resetMatch
-    }
+    onNewMatch={() =>
+
+    resetMatch({
+
+        setCurrentRound,
+
+        setMatchA,
+        setMatchB,
+
+        setTeamA,
+        setTeamB,
+
+        setTableDahlas,
+
+        setTrumpSuit,
+        setLeadSuit,
+
+        setMatchOver,
+        setMatchWinner,
+
+        setUncapturedTricks,
+
+        setCapturedTrickCountA,
+        setCapturedTrickCountB,
+
+        setRoundHistory,
+
+        setShowRoundSummary,
+
+        setPendingRoundStart,
+
+        setRoundCountdown,
+
+        setDealStage,
+
+        setNotification,
+
+        setPlayers,
+        setDeck,
+
+        setCapturedA,
+        setCapturedB,
+
+        setCenterCards,
+
+        setTableDahlaSuits,
+
+        setLastWinner,
+        setConsecutiveWins,
+
+        setTrumpFixer,
+
+        currentRound,
+
+        matchA,
+        matchB,
+
+        setCurrentPlayer
+
+    })
+
+}
 
 />
 
