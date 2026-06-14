@@ -105,6 +105,11 @@ from './components/RoundSummaryModal';
 import CenterNotification
 from './components/CenterNotification';
 
+import {
+    handleNoTrumpDeal
+}
+from './game/noTrumpDealer';
+
 import UndoButton
 from './components/UndoButton';
 
@@ -975,63 +980,25 @@ const trickRecord = {
 
     ) {
 
-        const updatedPlayersCopy =
+        const dealResult =
 
-        updatedPlayers.map(
-            hand => [...hand]
-        );
+handleNoTrumpDeal({
 
-        const updatedDeckCopy =
-        [...deck];
+    cardsToDeal: 5,
 
-        for (
+    updatedPlayers,
 
-            let i = 0;
+    deck
 
-            i < 5;
-
-            i++
-
-        ) {
-
-            for (
-
-                let p = 0;
-
-                p < 4;
-
-                p++
-
-            ) {
-
-                updatedPlayersCopy[p]
-                .push(
-
-                    updatedDeckCopy.pop()
-
-                );
-
-            }
-
-        }
-
-        const sortedPlayers =
-
-updatedPlayersCopy.map(
-
-    hand => sortHand(hand)
-
-);
+});
 
 setPlayers(
-    sortedPlayers
+    dealResult.players
 );
 
 const allDahlasWinner =
 
-getAllDahlasWinner(
-    sortedPlayers
-);
+dealResult.allDahlasWinner;
 
 if (
 
@@ -1073,9 +1040,9 @@ if (
     return;
 }
 
-        setDeck(
-            updatedDeckCopy
-        );
+       setDeck(
+    dealResult.deck
+);
 
         setDealStage(1);
 
@@ -1112,63 +1079,25 @@ if (
 
     ) {
 
-        const updatedPlayersCopy =
+        const dealResult =
 
-        updatedPlayers.map(
-            hand => [...hand]
-        );
+handleNoTrumpDeal({
 
-        const updatedDeckCopy =
-        [...deck];
+    cardsToDeal: 3,
 
-        for (
+    updatedPlayers,
 
-            let i = 0;
+    deck
 
-            i < 3;
-
-            i++
-
-        ) {
-
-            for (
-
-                let p = 0;
-
-                p < 4;
-
-                p++
-
-            ) {
-
-                updatedPlayersCopy[p]
-                .push(
-
-                    updatedDeckCopy.pop()
-
-                );
-
-            }
-
-        }
-
-        const sortedPlayers =
-
-updatedPlayersCopy.map(
-
-    hand => sortHand(hand)
-
-);
+});
 
 setPlayers(
-    sortedPlayers
+    dealResult.players
 );
 
 const allDahlasWinner =
 
-getAllDahlasWinner(
-    sortedPlayers
-);
+dealResult.allDahlasWinner;
 
 if (
 
@@ -1211,8 +1140,8 @@ if (
 }
 
         setDeck(
-            updatedDeckCopy
-        );
+    dealResult.deck
+);
 
         setDealStage(2);
 
@@ -1350,8 +1279,7 @@ captureResult.updatedTeamB;
 const tricksCaptured =
 captureResult.tricksCaptured;
 
-const captured =
-captureResult.captured;
+
 
         // CAPTURE DEHLAS
 
