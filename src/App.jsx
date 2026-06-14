@@ -41,6 +41,11 @@ import {
 }
 from './game/engine';
 
+import {
+    processCapture
+}
+from './game/captureManager';
+
 
 
 import PlayerHand
@@ -1286,277 +1291,73 @@ card.value === '10'
             winner.player
         );
 
-        let updatedTeamA =
-        teamA;
+        const captureResult =
 
-        let updatedTeamB =
-        teamB;
+processCapture({
 
-        const tricksCaptured =
+    winner,
 
-        uncapturedTricks.length + 1;
+    trickRecord,
+
+    newConsecutiveWins,
+
+    newTableDahlas,
+
+    newTableDahlaSuits,
+
+    uncapturedTricks,
+
+    teamA,
+
+    teamB,
+
+    setTeamA,
+    setTeamB,
+
+    setCapturedA,
+    setCapturedB,
+
+    setCapturedTrickCountA,
+    setCapturedTrickCountB,
+
+    setCapturedTrickAnimationCount,
+    setCapturedDehlaAnimationCount,
+
+    setTrickCaptureWinner,
+
+    setShowTrickCaptureAnimation,
+
+    setShowDehlaAnimation,
+    setShowTrumpAnimation,
+
+    setTableDahlas,
+    setTableDahlaSuits,
+
+    setUncapturedTricks,
+
+    shouldCaptureDahlas,
+
+    isTeamA
+
+});
+
+let updatedTeamA =
+captureResult.updatedTeamA;
+
+let updatedTeamB =
+captureResult.updatedTeamB;
+
+const tricksCaptured =
+captureResult.tricksCaptured;
+
+const captured =
+captureResult.captured;
 
         // CAPTURE DEHLAS
 
         
 
-        if (
-
-            shouldCaptureDahlas({
-
-                consecutiveWins:
-                newConsecutiveWins,
-
-                tableDahlas:
-                newTableDahlas
-
-            })
-
-        ) {
-
-            if (
-
-                isTeamA(
-                    winner.player
-                )
-
-            ) {
-
-                updatedTeamA +=
-                newTableDahlas;
-
-                setTeamA(
-                    updatedTeamA
-                );
-
-                setCapturedA(
-
-    prev => [
-
-        ...prev,
-
-        ...newTableDahlaSuits
-
-    ]
-
-);
-
-setCapturedTrickCountA(
-
-    prev =>
-
-    prev + tricksCaptured
-
-);
-
-                
-
-            } else {
-
-                updatedTeamB +=
-                newTableDahlas;
-
-                setTeamB(
-                    updatedTeamB
-                );
-
-                setCapturedB(
-
-    prev => [
-
-        ...prev,
-
-        ...newTableDahlaSuits
-
-    ]
-
-);
-
-setCapturedTrickCountB(
-
-    prev =>
-
-    prev + tricksCaptured
-
-);
-
-                
-            }
-
-            setShowDehlaAnimation(
-    false
-);
-
-setShowTrumpAnimation(
-    false
-);
-
-            setCapturedTrickAnimationCount(
-    tricksCaptured
-);
-
-setCapturedDehlaAnimationCount(
-    newTableDahlas
-);
-
-setTrickCaptureWinner(
-
-    isTeamA(
-        winner.player
-    )
-
-    ? 'A'
-
-    : 'B'
-
-);
-
-setShowTrickCaptureAnimation(
-    true
-);
-
-setTimeout(() => {
-
-    setShowTrickCaptureAnimation(
-        false
-    );
-
-}, 2200);
-
-           setTableDahlas(0);
-
-           setTableDahlaSuits([]);
-
-           setUncapturedTricks([]);
-        }
-
-        if (
-
-            !shouldCaptureDahlas({
-
-                consecutiveWins:
-                newConsecutiveWins,
-
-                tableDahlas:
-                newTableDahlas
-
-            })
-
-        ) {
-
-            setUncapturedTricks(
-
-                prev => [
-
-                    ...prev,
-
-                    trickRecord
-
-                ]
-
-            );
-
-        }
-
-       // FINAL TRICK
-
-if (
-
-    noCardsLeft
-
-    &&
-
-    !isRoundComplete({
-
-        teamA: updatedTeamA,
-
-        teamB: updatedTeamB
-
-    })
-
-) {
-
-    const finalTricksCaptured =
-
-        uncapturedTricks.length + 1;
-
-    if (
-
-        isTeamA(
-            winner.player
-        )
-
-    ) {
-
-        updatedTeamA +=
-        newTableDahlas;
-
-        setTeamA(
-            updatedTeamA
-        );
-
-        setCapturedA(
-
-            prev => [
-
-                ...prev,
-
-                ...newTableDahlaSuits
-
-            ]
-
-        );
-
-        setCapturedTrickCountA(
-
-            prev =>
-
-            prev + finalTricksCaptured
-
-        );
-
-    }
-
-    else {
-
-        updatedTeamB +=
-        newTableDahlas;
-
-        setTeamB(
-            updatedTeamB
-        );
-
-        setCapturedB(
-
-            prev => [
-
-                ...prev,
-
-                ...newTableDahlaSuits
-
-            ]
-
-        );
-
-        setCapturedTrickCountB(
-
-            prev =>
-
-            prev + finalTricksCaptured
-
-        );
-
-    }
-
-    setTableDahlas(0);
-
-    setTableDahlaSuits([]);
-
-    setUncapturedTricks([]);
-
-   
-
-}
+        
 
         // ROUND COMPLETE
 
