@@ -11,6 +11,10 @@ import {
 }
 from './game/trumpFix';
 
+import {
+    handleDehlaPlayed
+}
+from './game/dehlaTracker';
 
 
 import {
@@ -747,55 +751,21 @@ let trumpWasFixed = false;
 
 }
 
-   if (
+   handleDehlaPlayed({
 
-    card.value === '10'
+    card,
 
-) {
+    trumpWasFixed,
 
-    if (
+    setDehlaAnimationSuit,
 
-        !trumpWasFixed
+    setShowDehlaAnimation,
 
-    ) {
+    setTableDahlas,
 
-        setDehlaAnimationSuit(
-            card.suit
-        );
+    setTableDahlaSuits
 
-        setShowDehlaAnimation(
-            true
-        );
-
-        setTimeout(() => {
-
-            setShowDehlaAnimation(
-                false
-            );
-
-        }, 1800);
-
-    }
-
-    setTableDahlas(
-
-        prev => prev + 1
-
-    );
-
-    setTableDahlaSuits(
-
-        prev => [
-
-            ...prev,
-
-            card.suit
-
-        ]
-
-    );
-
-}
+});
 
     // REMOVE CARD
 
