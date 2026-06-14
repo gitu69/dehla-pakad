@@ -1,8 +1,7 @@
 import { useEffect, useState }
 from 'react';
 
-import { createDeck }
-from './game/deck';
+
 
 import { determineTrickWinner }
 from './game/trick';
@@ -11,7 +10,6 @@ from './game/trick';
 
 import {
 
-    createInitialHands,
     dealRemainingCards,
     areHandsEmpty,
     sortHand
@@ -44,8 +42,6 @@ from './components/Table';
 import { resetMatchState }
 from './game/match';
 
-import { resetRoundState }
-from './game/setup';
 
 import { chooseAICard }
 
@@ -57,9 +53,6 @@ from './game/matchComplete';
 import { undoMove }
 from './game/undo';
 
-import { hasAllFourDahlas }
-
-from './game/allDahlas';
 
 import {
 
@@ -68,6 +61,11 @@ import {
 
 }
 from './game/allDahlasManager';
+
+import {
+    startNextRound
+}
+from './game/roundManager';
 
 import ScoreBoard
 from './components/ScoreBoard';
@@ -248,7 +246,62 @@ useState(true);
 
    useEffect(() => {
 
-    startNextRound(0);
+    startNextRound({
+
+        starter: 0,
+
+        setPlayers,
+        setDeck,
+
+        setCapturedA,
+        setCapturedB,
+
+        setUncapturedTricks,
+
+        setCapturedTrickCountA,
+        setCapturedTrickCountB,
+
+        setDealStage,
+
+        setCenterCards,
+        setLeadSuit,
+        setTrumpSuit,
+
+        setTableDahlas,
+        setTableDahlaSuits,
+
+        setLastWinner,
+        setConsecutiveWins,
+
+        setTrumpFixer,
+
+        setTeamA,
+        setTeamB,
+
+        currentRound,
+
+        matchA,
+        matchB,
+
+        setMatchA,
+        setMatchB,
+
+        setRoundHistory,
+
+        setNotification,
+
+        setMatchWinner,
+        setMatchOver,
+
+        setRoundCountdown,
+
+        setPendingRoundStart,
+
+        setShowRoundSummary,
+
+        setCurrentPlayer
+
+    });
 
 }, []);
 
@@ -413,11 +466,63 @@ useEffect(() => {
 
         );
 
-        startNextRound(
+        startNextRound({
 
-            pendingRoundStart.winner
+    starter:
+    pendingRoundStart.winner,
 
-        );
+    setPlayers,
+    setDeck,
+
+    setCapturedA,
+    setCapturedB,
+
+    setUncapturedTricks,
+
+    setCapturedTrickCountA,
+    setCapturedTrickCountB,
+
+    setDealStage,
+
+    setCenterCards,
+    setLeadSuit,
+    setTrumpSuit,
+
+    setTableDahlas,
+    setTableDahlaSuits,
+
+    setLastWinner,
+    setConsecutiveWins,
+
+    setTrumpFixer,
+
+    setTeamA,
+    setTeamB,
+
+    currentRound,
+
+    matchA,
+    matchB,
+
+    setMatchA,
+    setMatchB,
+
+    setRoundHistory,
+
+    setNotification,
+
+    setMatchWinner,
+    setMatchOver,
+
+    setRoundCountdown,
+
+    setPendingRoundStart,
+
+    setShowRoundSummary,
+
+    setCurrentPlayer
+
+});
 
         setPendingRoundStart(
             null
@@ -1943,131 +2048,6 @@ return;
 
    
 
-    function startNextRound(starter) {
-
-        const shuffledDeck =
-        createDeck();
-
-       let newPlayers =
-
-createInitialHands(
-    shuffledDeck
-);
-
-newPlayers =
-
-newPlayers.map(
-
-    hand => sortHand(hand)
-
-);
-
-
-setPlayers(
-    newPlayers
-);
-
-setDeck(
-    shuffledDeck
-);
-
-// RESET ROUND STATES
-
-        
-
-        setCapturedA([]);
-setCapturedB([]);
-
-setUncapturedTricks([]);
-
-setCapturedTrickCountA(0);
-
-setCapturedTrickCountB(0);
-
-setDealStage(0);
-
-        resetRoundState({
-
-    setCenterCards,
-
-    setLeadSuit,
-
-    setTrumpSuit,
-
-    setTableDahlas,
-
-    setTableDahlaSuits,
-
-    setLastWinner,
-
-    setConsecutiveWins,
-
-    setTrumpFixer,
-
-    setTeamA,
-
-    setTeamB
-
-});
-
-const allDahlasWinner =
-
-getAllDahlasWinner(
-    newPlayers
-);
-
-if (
-
-    allDahlasWinner !== -1
-
-) {
-
-    setTimeout(() => {
-
-        processAllDahlasWin({
-
-    winnerPlayer:
-    allDahlasWinner,
-
-    currentRound,
-
-    matchA,
-    matchB,
-
-    setTeamA,
-    setTeamB,
-
-    setMatchA,
-    setMatchB,
-
-    setRoundHistory,
-
-    setNotification,
-
-    setMatchWinner,
-    setMatchOver,
-
-    setRoundCountdown,
-
-    setPendingRoundStart,
-
-    setShowRoundSummary
-
-});
-
-    }, 100);
-
-    return;
-}
-
-      
-        // ROUND STARTER
-
-      setCurrentPlayer(
-       starter
-       );
-    }
-
   function resetMatch() {
 
     resetMatchState({
@@ -2117,7 +2097,62 @@ setDealStage(0);
 
 setNotification('');
 
-startNextRound(0);
+startNextRound({
+
+    starter: 0,
+
+    setPlayers,
+    setDeck,
+
+    setCapturedA,
+    setCapturedB,
+
+    setUncapturedTricks,
+
+    setCapturedTrickCountA,
+    setCapturedTrickCountB,
+
+    setDealStage,
+
+    setCenterCards,
+    setLeadSuit,
+    setTrumpSuit,
+
+    setTableDahlas,
+    setTableDahlaSuits,
+
+    setLastWinner,
+    setConsecutiveWins,
+
+    setTrumpFixer,
+
+    setTeamA,
+    setTeamB,
+
+    currentRound,
+
+    matchA,
+    matchB,
+
+    setMatchA,
+    setMatchB,
+
+    setRoundHistory,
+
+    setNotification,
+
+    setMatchWinner,
+    setMatchOver,
+
+    setRoundCountdown,
+
+    setPendingRoundStart,
+
+    setShowRoundSummary,
+
+    setCurrentPlayer
+
+});
 }
 
 
