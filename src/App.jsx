@@ -46,6 +46,11 @@ import {
 }
 from './game/captureManager';
 
+import {
+    processFinalTrick
+}
+from './game/finalTrickManager';
+
 
 
 import PlayerHand
@@ -1283,7 +1288,49 @@ captureResult.tricksCaptured;
 
         // CAPTURE DEHLAS
 
-        
+        const finalTrickResult =
+
+processFinalTrick({
+
+    noCardsLeft,
+
+    updatedTeamA,
+
+    updatedTeamB,
+
+    winner,
+
+    newTableDahlas,
+
+    newTableDahlaSuits,
+
+    uncapturedTricks,
+
+    setTeamA,
+    setTeamB,
+
+    setCapturedA,
+    setCapturedB,
+
+    setCapturedTrickCountA,
+    setCapturedTrickCountB,
+
+    setTableDahlas,
+    setTableDahlaSuits,
+
+    setUncapturedTricks,
+
+    isRoundComplete,
+
+    isTeamA
+
+});
+
+updatedTeamA =
+finalTrickResult.updatedTeamA;
+
+updatedTeamB =
+finalTrickResult.updatedTeamB;
 
         
 
