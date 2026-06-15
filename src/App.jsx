@@ -1,4 +1,8 @@
-import { useEffect, useState }
+import {
+    useEffect,
+    useState,
+    useRef
+}
 from 'react';
 
 
@@ -243,7 +247,8 @@ const [pendingRoundStart,
 setPendingRoundStart] =
 useState(null);
 
-
+const isPlayingCardRef =
+useRef(false);
 
 
 
@@ -267,7 +272,8 @@ useState(0);
     const [aiEnabled, setAiEnabled] =
 useState(true);
 
-    
+    const [roundEnded, setRoundEnded] =
+useState(false);
 
 
    
@@ -488,6 +494,10 @@ useEffect(() => {
             false
         );
 
+        setRoundEnded(
+    false
+);
+
         setRoundCountdown(8);
 
         setCurrentRound(
@@ -590,8 +600,67 @@ useEffect(() => {
 
 
    function playCard(index) {
+    
 
-    setHistory(prev => [
+   if (
+    isPlayingCardRef.current
+) 
+
+{
+    return;
+}
+
+
+isPlayingCardRef.current =
+true;
+
+    
+
+    const updatedPlayers =
+    players.map(hand => [...hand]);
+
+    const card =
+    updatedPlayers[currentPlayer][index];
+
+    let localTrumpFixer =
+trumpFixer;
+
+let trumpWasFixed = false;
+
+    if (!card) {
+
+        isPlayingCardRef.current =
+false;
+
+        return;
+    }
+
+    // FOLLOW SUIT
+
+   if (
+
+    !validateFollowSuit({
+
+        leadSuit,
+
+        hand:
+        updatedPlayers[currentPlayer],
+
+        card,
+
+        setNotification
+
+    })
+
+) {
+
+    isPlayingCardRef.current =
+false;
+
+    return;
+}
+
+setHistory(prev => [
 
     ...prev,
 
@@ -668,44 +737,6 @@ deck:
     }
 
 ]);
-
-    const updatedPlayers =
-    players.map(hand => [...hand]);
-
-    const card =
-    updatedPlayers[currentPlayer][index];
-
-    let localTrumpFixer =
-trumpFixer;
-
-let trumpWasFixed = false;
-
-    if (!card) {
-
-        return;
-    }
-
-    // FOLLOW SUIT
-
-   if (
-
-    !validateFollowSuit({
-
-        leadSuit,
-
-        hand:
-        updatedPlayers[currentPlayer],
-
-        card,
-
-        setNotification
-
-    })
-
-) {
-
-    return;
-}
 
     // SET LEAD SUIT
 
@@ -902,6 +933,9 @@ if (
 
 });
 
+isPlayingCardRef.current =
+false;
+
     return;
 }
 
@@ -1042,6 +1076,9 @@ if (
 
 });
 
+isPlayingCardRef.current =
+false;
+
     return;
 }
 
@@ -1140,6 +1177,9 @@ if (
     setShowRoundSummary
 
 });
+
+isPlayingCardRef.current =
+false;
 
     return;
 }
@@ -1696,11 +1736,18 @@ if (
 
     setTimeout(() => {
 
-        setShowRoundSummary(
-            true
-        );
+    setRoundEnded(
+        true
+    );
 
-    }, 2500);
+    setShowRoundSummary(
+        true
+    );
+
+}, 2500);
+
+isPlayingCardRef.current =
+false;
 
     return;
 }
@@ -1722,11 +1769,18 @@ setPendingRoundStart({
 
 setTimeout(() => {
 
+    setRoundEnded(
+        true
+    );
+
     setShowRoundSummary(
         true
     );
 
 }, 2500);
+
+isPlayingCardRef.current =
+false;
 
 return;
             
@@ -1747,24 +1801,34 @@ return;
             setCurrentPlayer(
                 winner.player
             );
+            isPlayingCardRef.current =
+false;
 
         }, 1000);
     }
 
     // CONTINUE TRICK
 
-    else {
+   else {
 
-        setCenterCards(
-            updatedCenter
-        );
+    setCenterCards(
+        updatedCenter
+    );
 
-        setCurrentPlayer(
+    setCurrentPlayer(
 
-            (currentPlayer + 1) % 4
+        (currentPlayer + 1) % 4
 
-        );
-    }
+    );
+
+    setTimeout(() => {
+
+        isPlayingCardRef.current =
+        false;
+
+    }, 50);
+
+}
 }
 
     // START NEXT ROUND
@@ -1863,11 +1927,13 @@ text-white
 
     onContinue={() => {
 
-        setShowRoundSummary(
-            false
-        );
+    setShowRoundSummary(
+        false
+    );
 
-    }}
+    setCenterCards([]);
+
+}}
 
     isMatchComplete={
         matchOver

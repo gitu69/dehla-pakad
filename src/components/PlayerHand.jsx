@@ -1,5 +1,7 @@
 import Card from './Card';
 
+import { useState } from 'react';
+
 export default function PlayerHand({
 
     cards,
@@ -11,6 +13,9 @@ export default function PlayerHand({
     vertical = false
 
 }) {
+
+    const [touchStartY, setTouchStartY] =
+    useState(null);
 
     return (
 
@@ -48,20 +53,10 @@ export default function PlayerHand({
 
                         key={index}
 
-                        className={`
+                        className="
                             transition-all
                             duration-200
-
-                           ${
-    playerNumber === 0 &&
-    currentPlayer === 0 &&
-    isLegalCard
-
-        ? "scale-110 -translate-y-2"
-
-        : ""
-}
-                        `}
+                        "
 
                         style={
 
@@ -87,6 +82,75 @@ export default function PlayerHand({
 
                         }
 
+                        onTouchStart={(e) => {
+
+                            setTouchStartY(
+                                e.touches[0].clientY
+                            );
+
+                        }}
+
+                        onTouchEnd={(e) => {
+
+                            if (
+
+                                currentPlayer !== playerNumber
+
+                            ) {
+
+                                return;
+                            }
+
+                            if (
+
+                                playerNumber !== 0
+
+                            ) {
+
+                                return;
+                            }
+
+                            if (
+
+                                !isLegalCard
+
+                            ) {
+
+                                return;
+                            }
+
+                            if (
+
+                                touchStartY === null
+
+                            ) {
+
+                                return;
+                            }
+
+                            const touchEndY =
+
+                                e.changedTouches[0]
+                                .clientY;
+
+                            const swipeDistance =
+
+                                touchStartY -
+                                touchEndY;
+
+                            if (
+
+                                swipeDistance > 60
+
+                            ) {
+
+                                playCard(
+                                    index
+                                );
+                            }
+
+                        }}
+
                     >
 
                         <Card
@@ -103,10 +167,27 @@ export default function PlayerHand({
 
                             onClick={() => {
 
+                                const isTouchDevice =
+
+                                    'ontouchstart' in window;
+
+                                if (
+
+                                    isTouchDevice
+
+                                ) {
+
+                                    return;
+                                }
+
                                 if (
 
                                     currentPlayer ===
                                     playerNumber
+
+                                    &&
+
+                                    isLegalCard
 
                                 ) {
 
