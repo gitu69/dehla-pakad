@@ -38,6 +38,10 @@ export default function PlayerHand({
 
             {cards.map((card, index) => {
 
+                const cardKey =
+
+                    `${card.suit}-${card.value}`;
+
                 const isLegalCard =
 
                     !leadSuit ||
@@ -59,14 +63,14 @@ export default function PlayerHand({
 
                     <div
 
-                        key={index}
+                        key={cardKey}
 
                         className={`
                             transition-all
                             duration-200
 
                             ${
-                                activeCard === index
+                                activeCard === cardKey
 
                                 ? "scale-110 -translate-y-4"
 
@@ -116,7 +120,7 @@ export default function PlayerHand({
                             ) {
 
                                 setActiveCard(
-                                    index
+                                    cardKey
                                 );
 
                             }
@@ -167,7 +171,7 @@ export default function PlayerHand({
                             );
 
                             setActiveCard(
-                                index
+                                cardKey
                             );
 
                         }}
