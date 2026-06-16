@@ -17,6 +17,9 @@ export default function PlayerHand({
     const [touchStartY, setTouchStartY] =
     useState(null);
 
+    const [activeCard, setActiveCard] =
+    useState(null);
+
     return (
 
         <div
@@ -47,16 +50,34 @@ export default function PlayerHand({
 
                         : card.suit === leadSuit;
 
+                const isCurrentPlayer =
+
+                    currentPlayer ===
+                    playerNumber;
+
                 return (
 
                     <div
 
                         key={index}
 
-                        className="
+                        className={`
                             transition-all
                             duration-200
-                        "
+
+                            ${
+                                activeCard === index
+
+                                ? "scale-110 -translate-y-4"
+
+                                : isCurrentPlayer &&
+                                  isLegalCard
+
+                                    ? "scale-105 -translate-y-1"
+
+                                    : ""
+                            }
+                        `}
 
                         style={
 
@@ -82,10 +103,71 @@ export default function PlayerHand({
 
                         }
 
+                        onMouseEnter={() => {
+
+                            const isTouchDevice =
+
+                                'ontouchstart' in window;
+
+                            if (
+
+                                !isTouchDevice
+
+                            ) {
+
+                                setActiveCard(
+                                    index
+                                );
+
+                            }
+
+                        }}
+
+                        onMouseLeave={() => {
+
+                            const isTouchDevice =
+
+                                'ontouchstart' in window;
+
+                            if (
+
+                                !isTouchDevice
+
+                            ) {
+
+                                setActiveCard(
+                                    null
+                                );
+
+                            }
+
+                        }}
+
                         onTouchStart={(e) => {
+
+                            if (
+
+                                currentPlayer !== playerNumber
+
+                                ||
+
+                                playerNumber !== 0
+
+                                ||
+
+                                !isLegalCard
+
+                            ) {
+
+                                return;
+                            }
 
                             setTouchStartY(
                                 e.touches[0].clientY
+                            );
+
+                            setActiveCard(
+                                index
                             );
 
                         }}
@@ -125,6 +207,10 @@ export default function PlayerHand({
 
                             ) {
 
+                                setActiveCard(
+                                    null
+                                );
+
                                 return;
                             }
 
@@ -144,10 +230,20 @@ export default function PlayerHand({
 
                             ) {
 
+                                setActiveCard(
+                                    null
+                                );
+
                                 playCard(
                                     index
                                 );
+
+                                return;
                             }
+
+                            setActiveCard(
+                                null
+                            );
 
                         }}
 
@@ -190,6 +286,10 @@ export default function PlayerHand({
                                     isLegalCard
 
                                 ) {
+
+                                    setActiveCard(
+                                        null
+                                    );
 
                                     playCard(
                                         index
