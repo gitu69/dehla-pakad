@@ -2,7 +2,9 @@ import Card from './Card';
 
 export default function Table({
 
-    centerCards
+    centerCards,
+
+    currentLeadingPlayer
 
 }) {
 
@@ -122,7 +124,30 @@ export default function Table({
                     className={position}
                     >
 
-                        <div className={rotation}>
+                        <div
+
+className={`
+    ${rotation}
+
+    transition-all
+    duration-300
+
+    ${
+
+        currentLeadingPlayer !== null
+
+        &&
+
+        item.player !==
+        currentLeadingPlayer
+
+        ? 'opacity-60'
+
+        : 'opacity-100'
+
+    }
+`}
+>
 
                             <Card
                                 card={item.card}

@@ -11,6 +11,11 @@ import { determineTrickWinner }
 from './game/trick';
 
 import {
+    getCurrentLeader
+}
+from './game/currentLeader';
+
+import {
     handleTrumpFix
 }
 from './game/trumpFix';
@@ -98,6 +103,7 @@ from './game/resetManager';
 
 import ScoreBoard
 from './components/ScoreBoard';
+
 
 import TrumpAnimation
 from './components/TrumpAnimation';
@@ -274,6 +280,10 @@ useState(true);
 
     const [roundEnded, setRoundEnded] =
 useState(false);
+
+const [currentLeadingPlayer,
+setCurrentLeadingPlayer] =
+useState(null);
 
 
    
@@ -834,6 +844,32 @@ deck:
         }
 
     ];
+
+    const activeTrump =
+
+trumpSuit ||
+
+(
+    localTrumpFixer !== null
+
+    ? card.suit
+
+    : null
+);
+
+const currentLeader =
+
+getCurrentLeader(
+
+    updatedCenter,
+
+    activeTrump
+
+);
+
+setCurrentLeadingPlayer(
+    currentLeader
+);
 
     // COMPLETE TRICK
 
@@ -1792,15 +1828,19 @@ return;
 
             setCenterCards([]);
 
-            setLeadSuit(null);
+setLeadSuit(null);
 
-            setTrumpFixer(
-                null
-            );
+setCurrentLeadingPlayer(
+    null
+);
 
-            setCurrentPlayer(
-                winner.player
-            );
+setTrumpFixer(
+    null
+);
+
+setCurrentPlayer(
+    winner.player
+);
             isPlayingCardRef.current =
 false;
 
@@ -2294,7 +2334,13 @@ justify-center
 >
 
 <Table
+
     centerCards={centerCards}
+
+    currentLeadingPlayer={
+        currentLeadingPlayer
+    }
+
 />
 
 </div>
