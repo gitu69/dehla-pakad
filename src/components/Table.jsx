@@ -4,7 +4,9 @@ export default function Table({
 
     centerCards,
 
-    currentLeadingPlayer
+    currentLeadingPlayer,
+
+    collectingTrick
 
 }) {
 
@@ -120,8 +122,28 @@ export default function Table({
                 return (
 
                     <div
+
                     key={index}
-                    className={position}
+
+                    className={`
+                        ${position}
+
+                        transition-all
+                        duration-400
+
+                        ${
+
+                            collectingTrick
+
+                            ? `
+                                scale-75
+                                opacity-0
+                              `
+
+                            : ''
+
+                        }
+                    `}
                     >
 
                         <div

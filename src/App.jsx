@@ -285,6 +285,10 @@ const [currentLeadingPlayer,
 setCurrentLeadingPlayer] =
 useState(null);
 
+const [collectingTrick,
+setCollectingTrick] =
+useState(false);
+
 
    
 
@@ -882,6 +886,14 @@ setCurrentLeadingPlayer(
         setCenterCards(
             updatedCenter
         );
+
+        setTimeout(() => {
+
+    setCollectingTrick(
+        true
+    );
+
+}, 400);
 
         // DEAL REMAINING CARDS
         // AFTER FIRST TRUMP FIX
@@ -1826,25 +1838,30 @@ return;
 
         setTimeout(() => {
 
-            setCenterCards([]);
+    setCollectingTrick(
+        false
+    );
 
-setLeadSuit(null);
+    setCenterCards([]);
 
-setCurrentLeadingPlayer(
-    null
-);
+    setLeadSuit(null);
 
-setTrumpFixer(
-    null
-);
+    setCurrentLeadingPlayer(
+        null
+    );
 
-setCurrentPlayer(
-    winner.player
-);
-            isPlayingCardRef.current =
-false;
+    setTrumpFixer(
+        null
+    );
 
-        }, 1000);
+    setCurrentPlayer(
+        winner.player
+    );
+
+    isPlayingCardRef.current =
+    false;
+
+}, 900);
     }
 
     // CONTINUE TRICK
@@ -2339,6 +2356,10 @@ justify-center
 
     currentLeadingPlayer={
         currentLeadingPlayer
+    }
+
+    collectingTrick={
+        collectingTrick
     }
 
 />
