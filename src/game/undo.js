@@ -1,7 +1,6 @@
-export function undoMove( {
+export function undoMove({
 
-
-     history,
+    history,
     setHistory,
 
     setPlayers,
@@ -50,14 +49,24 @@ export function undoMove( {
 
     setDealStage,
 
-    setNotification
+    setNotification,
+
+    setRoundEnded,
+
+    setCollectingTrick,
+
+    setCurrentLeadingPlayer,
+
+    setShowCaptureFly,
+
+    setCaptureWinner
 
 }) {
 
-
-
     if (
+
         history.length === 0
+
     ) {
 
         return;
@@ -94,7 +103,7 @@ export function undoMove( {
     );
 
     setTableDahlaSuits(
-    previous.tableDahlaSuits
+        previous.tableDahlaSuits
     );
 
     setTeamA(
@@ -106,23 +115,23 @@ export function undoMove( {
     );
 
     setCapturedA(
-    previous.capturedA
+        previous.capturedA
     );
 
     setCapturedB(
-    previous.capturedB
+        previous.capturedB
     );
 
     setUncapturedTricks(
-    previous.uncapturedTricks
+        previous.uncapturedTricks
     );
 
     setCapturedTrickCountA(
-    previous.capturedTrickCountA
+        previous.capturedTrickCountA
     );
 
     setCapturedTrickCountB(
-    previous.capturedTrickCountB
+        previous.capturedTrickCountB
     );
 
     setLastWinner(
@@ -142,50 +151,68 @@ export function undoMove( {
     );
 
     setCurrentRound(
-    previous.currentRound
-);
+        previous.currentRound
+    );
 
-setMatchA(
-    previous.matchA
-);
+    setMatchA(
+        previous.matchA
+    );
 
-setMatchB(
-    previous.matchB
-);
+    setMatchB(
+        previous.matchB
+    );
 
-setMatchOver(
-    previous.matchOver
-);
+    setMatchOver(
+        previous.matchOver
+    );
 
-setMatchWinner(
-    previous.matchWinner
-);
+    setMatchWinner(
+        previous.matchWinner
+    );
 
-setShowRoundSummary(
-    previous.showRoundSummary
-);
+    setShowRoundSummary(
+        previous.showRoundSummary
+    );
 
-setRoundCountdown(
-    previous.roundCountdown
-);
+    setRoundCountdown(
+        previous.roundCountdown
+    );
 
-setPendingRoundStart(
-    previous.pendingRoundStart
-);
+    setPendingRoundStart(
+        previous.pendingRoundStart
+    );
 
-setRoundHistory(
-    previous.roundHistory
-);
+    setRoundHistory(
+        previous.roundHistory
+    );
 
-setDealStage(
-    previous.dealStage
-);
+    setDealStage(
+        previous.dealStage
+    );
 
-setNotification(
-    previous.notification || ''
-);
+    setNotification(
+        previous.notification || ''
+    );
 
+    setRoundEnded(
+        previous.roundEnded || false
+    );
 
+    setCollectingTrick(
+        false
+    );
+
+    setCurrentLeadingPlayer(
+        previous.currentLeadingPlayer ?? null
+    );
+
+    setShowCaptureFly(
+        false
+    );
+
+    setCaptureWinner(
+        previous.captureWinner ?? null
+    );
 
     setHistory(
 
@@ -195,4 +222,5 @@ setNotification(
         )
 
     );
+
 }

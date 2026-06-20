@@ -134,7 +134,11 @@ from './components/ShowCardsButton';
 import AISwitchButton
 from './components/AISwitchButton';
 
+import CaptureFlyAnimation
+from './components/CaptureFlyAnimation';
 
+import DealAnimation
+from './components/DealAnimation';
 
 export default function App() {
 
@@ -290,11 +294,37 @@ setCollectingTrick] =
 useState(false);
 
 
+const [showCaptureFly,
+setShowCaptureFly] =
+useState(false);
+
+const [captureWinner,
+setCaptureWinner] =
+useState(null);
+
+
+
+const [isDealing,
+setIsDealing] =
+useState(false);
+
    
 
     // INITIAL DEAL
 
    useEffect(() => {
+
+    setIsDealing(
+    true
+);
+
+setTimeout(() => {
+
+    setIsDealing(
+        false
+    );
+
+}, 1800);
 
     startNextRound({
 
@@ -389,6 +419,16 @@ useEffect(() => {
 
 }
 
+if (
+
+    isDealing
+
+) {
+
+    return;
+
+}
+
     // NO CARDS
 
     if (
@@ -456,7 +496,7 @@ players[currentPlayer]
 
         }
 
-    }, 1000);
+    }, 1900);
 
     return () =>
 
@@ -478,7 +518,9 @@ players[currentPlayer]
 
     tableDahlas,
 
-    trumpSuit
+    trumpSuit,
+
+    isDealing
 
 ]);
 
@@ -512,15 +554,47 @@ useEffect(() => {
     false
 );
 
+setCollectingTrick(
+    false
+);
+
+setCurrentLeadingPlayer(
+    null
+);
+
+setCenterCards([]);
+
+setLeadSuit(
+    null
+);
+
+setTrumpFixer(
+    null
+);
+
         setRoundCountdown(8);
 
-        setCurrentRound(
+        const nextRound =
 
-            prev => prev + 1
+currentRound + 1;
 
-        );
+setCurrentRound(
+    nextRound
+);
 
-        startNextRound({
+setIsDealing(
+    true
+);
+
+setTimeout(() => {
+
+    setIsDealing(
+        false
+    );
+
+}, 1800);
+
+startNextRound({
 
     starter:
     pendingRoundStart.winner,
@@ -553,7 +627,8 @@ useEffect(() => {
     setTeamA,
     setTeamB,
 
-    currentRound,
+    currentRound:
+    nextRound,
 
     matchA,
     matchB,
@@ -577,6 +652,8 @@ useEffect(() => {
     setCurrentPlayer
 
 });
+
+
 
         setPendingRoundStart(
             null
@@ -608,6 +685,39 @@ useEffect(() => {
     roundCountdown,
 
     pendingRoundStart
+
+]);
+
+useEffect(() => {
+
+    if (
+
+        !showCaptureFly
+
+    ) {
+
+        return;
+    }
+
+    const timer =
+
+    setTimeout(() => {
+
+        setShowCaptureFly(
+            false
+        );
+
+    }, 1600);
+
+    return () =>
+
+        clearTimeout(
+            timer
+        );
+
+}, [
+
+    showCaptureFly
 
 ]);
 
@@ -744,6 +854,16 @@ roundHistory:
 dealStage,
 
 notification,
+
+roundEnded,
+
+collectingTrick,
+
+currentLeadingPlayer,
+
+showCaptureFly,
+
+captureWinner,
 
 deck:
 [...deck]
@@ -929,20 +1049,19 @@ dealRemainingCards(
 
              );
 
-            setPlayers(
-                result.players
-            );
+            setIsDealing(
+    true
+);
 
-            
+setPlayers(
+    result.players
+);
 
-            const allDahlasWinner =
+const allDahlasWinner =
 
 getAllDahlasWinner(
     result.players
 );
-
-
-
 
 if (
 
@@ -952,45 +1071,55 @@ if (
 
     processAllDahlasWin({
 
-    winnerPlayer:
-    allDahlasWinner,
+        winnerPlayer:
+        allDahlasWinner,
 
-    currentRound,
+        currentRound,
 
-    matchA,
-    matchB,
+        matchA,
+        matchB,
 
-    setTeamA,
-    setTeamB,
+        setTeamA,
+        setTeamB,
 
-    setMatchA,
-    setMatchB,
+        setMatchA,
+        setMatchB,
 
-    setRoundHistory,
+        setRoundHistory,
 
-    setNotification,
+        setNotification,
 
-    setMatchWinner,
-    setMatchOver,
+        setMatchWinner,
+        setMatchOver,
 
-    setRoundCountdown,
+        setRoundCountdown,
 
-    setPendingRoundStart,
+        setPendingRoundStart,
 
-    setShowRoundSummary
+        setShowRoundSummary
 
-});
+    });
 
-isPlayingCardRef.current =
-false;
+    isPlayingCardRef.current =
+    false;
 
     return;
 }
 
-            setDeck(
-                result.deck
-            );
-            setDealStage(2);
+setDeck(
+    result.deck
+);
+
+setDealStage(2);
+
+setTimeout(() => {
+
+    setIsDealing(
+        false
+    );
+
+}, 1800);
+            
         }
 
        
@@ -1371,6 +1500,37 @@ captureResult.updatedTeamB;
 
 const tricksCaptured =
 captureResult.tricksCaptured;
+
+if (
+
+    shouldCaptureDahlas({
+
+        consecutiveWins:
+        newConsecutiveWins,
+
+        tableDahlas:
+        newTableDahlas
+
+    })
+
+) {
+
+    setCaptureWinner(
+
+        isTeamA(
+            winner.player
+        )
+
+        ? 'A'
+
+        : 'B'
+
+    );
+
+    setShowCaptureFly(
+        true
+    );
+}
 
 
 
@@ -1794,6 +1954,14 @@ if (
 
 }, 2500);
 
+setCollectingTrick(
+    false
+);
+
+setCurrentLeadingPlayer(
+    null
+);
+
 isPlayingCardRef.current =
 false;
 
@@ -1826,6 +1994,14 @@ setTimeout(() => {
     );
 
 }, 2500);
+
+setCollectingTrick(
+    false
+);
+
+setCurrentLeadingPlayer(
+    null
+);
 
 isPlayingCardRef.current =
 false;
@@ -1908,6 +2084,16 @@ text-white
 "
 >
 
+
+<DealAnimation
+
+    isDealing={
+        isDealing
+    }
+
+/>
+
+
     <CenterNotification
 
     show={
@@ -1959,6 +2145,26 @@ text-white
     }
 
 />
+
+{/*
+
+<CaptureFlyAnimation
+
+    show={showCaptureFly}
+
+    winner={captureWinner}
+
+    trickCount={
+        capturedTrickAnimationCount
+    }
+
+    dehlaCount={
+        capturedDehlaAnimationCount
+    }
+
+/>
+
+*/}
 
 <RoundSummaryModal
 
@@ -2158,7 +2364,17 @@ z-40
 
             setDealStage,
 
-            setNotification
+            setNotification,
+
+            setRoundEnded,
+
+            setCollectingTrick,
+
+            setCurrentLeadingPlayer,
+
+            setShowCaptureFly,
+
+            setCaptureWinner,
 
         })
 
@@ -2201,6 +2417,8 @@ z-40
 {
 
 showAllCards
+&&
+!isDealing
 
 ? (
 
@@ -2228,7 +2446,9 @@ showAllCards
     position="bottom"
 
     cardCount={
-        players[2].length
+        isDealing
+            ? 0
+            : players[2].length
     }
 
     isCurrentPlayer={
@@ -2284,6 +2504,8 @@ z-20
 {
 
 showAllCards
+&&
+!isDealing
 
 ? (
 
@@ -2312,8 +2534,10 @@ showAllCards
     playerName="Player 4"
     position="right"
     cardCount={
-        players[3].length
-    }
+    isDealing
+        ? 0
+        : players[3].length
+}
 
     isCurrentPlayer={
         currentPlayer === 3
@@ -2391,6 +2615,8 @@ z-40
 {
 
 showAllCards
+&&
+!isDealing
 
 ? (
 
@@ -2420,8 +2646,10 @@ showAllCards
     position="left"
 
     cardCount={
-        players[1].length
-    }
+    isDealing
+        ? 0
+        : players[1].length
+}
 
     isCurrentPlayer={
         currentPlayer === 1
@@ -2462,7 +2690,11 @@ w-full
 >
 
   <div className="translate-y-12 md:translate-y-7">
- <PlayerHand
+ {
+
+    !isDealing && (
+
+<PlayerHand
 
     cards={players[0]}
 
@@ -2477,6 +2709,10 @@ w-full
     leadSuit={leadSuit}
 
 />
+
+    )
+
+}
 </div>
 
 <div className="-mt-5 relative z-50">
@@ -2485,8 +2721,10 @@ w-full
     playerName="You"
 
     cardCount={
-        players[0].length
-    }
+    isDealing
+        ? 0
+        : players[0].length
+}
 
     isCurrentPlayer={
         currentPlayer === 0

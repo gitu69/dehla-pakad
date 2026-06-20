@@ -22,7 +22,7 @@ export default function PlayerAvatar({
 
             {/* OPPONENT CARDS */}
 
-            {showCardFan && (
+            {showCardFan && cardCount > 0 && (
 
                 <div
                     className="
